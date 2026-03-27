@@ -1,25 +1,40 @@
 {
   "name": "imooc-visulization",
+  "version": "0.1.0",
   "private": true,
-  "version": "0.0.0",
+  "description": "",
+  "keywords": [
+    "数据可视化"
+  ],
+  "homepage": "https://github.com/chuanshanjia666/data_visulize#readme",
+  "bugs": {
+    "url": "https://github.com/chuanshanjia666/data_visulize/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chuanshanjia666/data_visulize.git"
+  },
+  "license": "MIT",
+  "author": "gugugaga",
   "type": "module",
+  "main": "postcss.config.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^1.4.0",
+    "axios": "^1.7.7",
     "countup.js": "^2.8.0",
-    "echarts": "^5.4.2",
+    "echarts": "^5.6.0",
     "echarts-wordcloud": "^2.1.0",
-    "vue": "^6.2.1"
+    "vue": "^3.5.13"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.2.3",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.30",
-    "tailwindcss": "^3.3.3",
-    "vite": "^6.2.1"
+    "@vitejs/plugin-vue": "^6.0.5",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.19",
+    "vite": "^5.4.11"
   }
 }
