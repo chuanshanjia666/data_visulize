@@ -43,16 +43,10 @@ const renderChart = () => {
       // 时间轴文本
       label: {
         // 默认字体
-        normal: {
-          textStyle: {
-            color: '#ddd',
-          },
-        },
+        color: '#ddd',
         // 高亮字体
         emphasis: {
-          textStyle: {
-            color: '#fff',
-          },
+          color: '#fff',
         },
       },
       // 每个小圆点大小
@@ -74,10 +68,8 @@ const renderChart = () => {
           // 上一步按钮
           showPrevBtn: true,
           // 默认样式
-          normal: {
-            color: '#666',
-            borderColor: '#666',
-          },
+          color: '#666',
+          borderColor: '#666',
           // 高亮样式
           emphasis: {
             color: '#aaa',
@@ -105,27 +97,25 @@ const renderChart = () => {
         center: [113.83531246, 34.0267395887],
         // 默认状态下省份样式
         itemStyle: {
-          normal: {
-            borderColor: 'rgba(147,235,248,1)',
-            borderWidth: 1,
-            // 区域颜色
-            areaColor: {
-              type: 'radial',
-              x: 0.5,
-              y: 0.5,
-              r: 0.5,
-              // 设置渐变色
-              colorStops: [
-                {
-                  offset: 0,
-                  color: 'rgba(147,235,248,0)',
-                },
-                {
-                  offset: 1,
-                  color: 'rgba(147,235,248,.2)',
-                },
-              ],
-            },
+          borderColor: 'rgba(147,235,248,1)',
+          borderWidth: 1,
+          // 区域颜色
+          areaColor: {
+            type: 'radial',
+            x: 0.5,
+            y: 0.5,
+            r: 0.5,
+            // 设置渐变色
+            colorStops: [
+              {
+                offset: 0,
+                color: 'rgba(147,235,248,0)',
+              },
+              {
+                offset: 1,
+                color: 'rgba(147,235,248,.2)',
+              },
+            ],
           },
           // 鼠标移入高亮色值设置
           emphasis: {
@@ -214,9 +204,7 @@ const renderChart = () => {
           type: 'bar',
           zlevel: 1.5,
           itemStyle: {
-            normal: {
-              color: props.data.colors[index],
-            },
+            color: props.data.colors[index],
           },
           data: props.data.categoryData[item]
             .sort((a, b) => {
@@ -241,19 +229,15 @@ const renderChart = () => {
           },
           // 文字
           label: {
-            normal: {
-              formatter: '{b}',
-              position: 'right',
-              show: true,
-            },
+            formatter: '{b}',
+            position: 'right',
+            show: true,
           },
           // 每一项的样式
           itemStyle: {
-            normal: {
-              color: props.data.colors[index],
-              shadowBlur: 5,
-              showShadowColor: props.data.colors[index],
-            },
+            color: props.data.colors[index],
+            shadowBlur: 5,
+            showShadowColor: props.data.colors[index],
           },
         },
       ],

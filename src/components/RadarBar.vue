@@ -28,11 +28,9 @@ const renderChart = () => {
     // 雷达图的坐标系配置
     radar: {
       // 雷达图名字
-      name: {
-        textStyle: {
-          color: '#05D5FF',
-          fontSize: 14,
-        },
+      axisName: {
+        color: '#05D5FF',
+        fontSize: 14,
       },
       // 雷达图形状
       shape: 'polygon',
@@ -99,16 +97,12 @@ const renderChart = () => {
       symbolSize: 10,
       // item样式
       itemStyle: {
-        normal: {
-          color: '#05d5ff',
-        },
+        color: '#05d5ff',
       },
       // 填充区域
       areaStyle: {
-        normal: {
-          color: '#05d5ff',
-          opacity: 0.5,
-        },
+        color: '#05d5ff',
+        opacity: 0.5,
       },
       // 线条颜色
       lineStyle: {
@@ -116,10 +110,8 @@ const renderChart = () => {
         color: '#05d5ff',
       },
       label: {
-        normal: {
-          show: true,
-          color: '#fff',
-        },
+        show: true,
+        color: '#fff',
       },
       data: [
         {

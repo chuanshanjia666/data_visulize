@@ -56,7 +56,7 @@ const renderChart = () => {
         // 指定每个柱子的样式
         itemStyle: {
           color: '#479AD3',
-          barBorderRadius: 5,
+          borderRadius: 5,
           shadowColor: 'rgba(0,0,0,.3)',
           shadowBlur: 5,
         },
