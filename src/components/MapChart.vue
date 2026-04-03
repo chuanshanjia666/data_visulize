@@ -171,9 +171,7 @@ const renderChart = () => {
         },
         axisLabel: {
           margin: 2,
-          textStyle: {
-            color: '#aaa',
-          },
+          color: '#aaa',
         },
       },
       yAxis: {
@@ -189,9 +187,7 @@ const renderChart = () => {
         },
         axisLabel: {
           interval: 0,
-          textStyle: {
-            color: '#ddd',
-          },
+          color: '#ddd',
         },
         data: props.data.categoryData[item]
           .sort((a, b) => {
@@ -237,7 +233,7 @@ const renderChart = () => {
           itemStyle: {
             color: props.data.colors[index],
             shadowBlur: 5,
-            showShadowColor: props.data.colors[index],
+            shadowColor: props.data.colors[index],
           },
         },
       ],

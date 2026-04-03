@@ -32,9 +32,11 @@ const getSeriesData = () => {
       // 饼图
       type: 'pie',
       // 逆时针
-      clockWise: false,
+      clockwise: false,
       // 鼠标移入不需要展示饼图动画
-      hoverAnimation: false,
+      emphasis: {
+        scale: false,
+      },
       // 饼图半径依次递减--环形
       radius: [73 - index * 15 + '%', 68 - index * 15 + '%'],
       // 中心点一致
@@ -56,7 +58,9 @@ const getSeriesData = () => {
           tooltip: {
             show: false,
           },
-          hoverAnimation: false,
+          emphasis: {
+            scale: false,
+          },
         },
       ],
     })
@@ -69,9 +73,11 @@ const getSeriesData = () => {
       // 位于最底层
       z: 1,
       // 逆时针
-      clockWise: false,
+      clockwise: false,
       // 关闭动画
-      hoverAnimation: false,
+      emphasis: {
+        scale: false,
+      },
       radius: [73 - index * 15 + '%', 68 - index * 15 + '%'],
       center: ['55%', '55%'],
       label: {
@@ -89,7 +95,9 @@ const getSeriesData = () => {
           tooltip: {
             show: false,
           },
-          hoverAnimation: false,
+          emphasis: {
+            scale: false,
+          },
         },
         // 透明区
         {
@@ -101,7 +109,9 @@ const getSeriesData = () => {
           tooltip: {
             show: false,
           },
-          hoverAnimation: false,
+          emphasis: {
+            scale: false,
+          },
         },
       ],
     })

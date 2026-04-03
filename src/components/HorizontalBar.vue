@@ -86,9 +86,7 @@ const renderChart = () => {
         label: {
           show: true,
           position: 'right',
-          textStyle: {
-            color: '#fff',
-          },
+          color: '#fff',
         },
       },
     ],
