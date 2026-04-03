@@ -1,29 +1,3 @@
 [build]
   publish = "dist"
   command = "npm run build"
-
-[build.environment]
-  NODE_VERSION = "18"
-
-[context.production]
-  command = "npm run build"
-
-[context.deploy-preview]
-  command = "npm run build"
-
-[context.branch-deploy]
-  command = "npm run build"
-
-# 重定向规则，确保SPA路由正常工作
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-# 缓存控制
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
-    X-Content-Type-Options = "nosniff"
