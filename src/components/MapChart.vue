@@ -94,7 +94,7 @@ const renderChart = () => {
         roam: true,
         zoom: 1.2,
         // 中心点==经纬度
-        center: [-190.3248152, 44.5658476],
+        center: [-170.3248152, 44.5658476],
         // 默认状态下省份样式
         itemStyle: {
           borderColor: 'rgba(147,235,248,1)',
