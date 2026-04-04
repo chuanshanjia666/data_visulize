@@ -6,7 +6,7 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import mapJson from '../assets/MapData/china.json'
+import mapJson from '../assets/MapData/cat.json'
 import * as echarts from 'echarts'
 
 const props = defineProps({
@@ -20,7 +20,7 @@ const target = ref(null)
 let myChart = null
 onMounted(() => {
   // 注册地图json文件
-  echarts.registerMap('china', mapJson)
+  echarts.registerMap('cat', mapJson)
   myChart = echarts.init(target.value)
   renderChart()
 })
@@ -89,12 +89,12 @@ const renderChart = () => {
       // 地图配置
       geo: {
         show: true,
-        map: 'china',
+        map: 'cat',
         // 开启缩放
         roam: true,
-        zoom: 0.8,
+        zoom: 1.2,
         // 中心点==经纬度
-        center: [113.83531246, 34.0267395887],
+        center: [-190.3248152, 44.5658476],
         // 默认状态下省份样式
         itemStyle: {
           borderColor: 'rgba(147,235,248,1)',
@@ -119,8 +119,10 @@ const renderChart = () => {
           },
           // 鼠标移入高亮色值设置
           emphasis: {
-            areaColor: '#389BB7',
-            borderWidth: 0,
+            itemStyle: {
+              areaColor: '#389BB7',
+              borderWidth: 0,
+            },
           },
         },
       },
@@ -135,7 +137,7 @@ const renderChart = () => {
       title: [
         // 大title
         {
-          text: '2019-2023 年度数据统计',
+          text: '2019-2023 哈基米省年度统计',
           left: 0,
           top: 0,
           textStyle: {
@@ -146,7 +148,7 @@ const renderChart = () => {
         // 小标题
         {
           id: 'statistic',
-          text: item + '年数据统计情况',
+          text: item + '年哈基米省统计情况',
           right: '0%',
           top: '4%',
           textStyle: {

@@ -1,29 +1,21 @@
 export const getVisualization = (year = 2024) => {
   return getMockLiaoningData(year);
-}
+};
 
-// 模拟数据接口（用于开发环境）
 export const getMockLiaoningData = (year = 2024) => {
-  // 辽宁省14个城市
+  // 哈基米省8个城市
   const cities = [
-    "沈阳市",
-    "大连市",
-    "鞍山市",
-    "抚顺市",
-    "本溪市",
-    "丹东市",
-    "锦州市",
-    "营口市",
-    "阜新市",
-    "辽阳市",
-    "盘锦市",
-    "铁岭市",
-    "朝阳市",
-    "葫芦岛市",
+    "哈基米",
+    "大狗嚼",
+    "叮咚鸡",
+    "南北绿豆",
+    "阿西伽",
+    "耐龙",
+    "香企鹅",
+    "曼波",
   ];
 
-  // 根据年份生成不同的基础值
-  const baseValue = 2020 + (year - 2020) * 50;
+  const baseValue = 2020 + (year - 2020) * 50; // 哈基米指数基准值
 
   // 生成各区数据
   const regionData = {
@@ -35,7 +27,7 @@ export const getMockLiaoningData = (year = 2024) => {
 
   // 风险数据
   const riskData = {
-    risks: cities.slice(0, 7).map((city) => ({
+    risks: cities.slice(0, 6).map((city) => ({
       name: city,
       value: Math.floor(Math.random() * 40 + 40),
     })),
@@ -46,7 +38,7 @@ export const getMockLiaoningData = (year = 2024) => {
     relations: [
       {
         id: 0,
-        name: "沈阳数据中心",
+        name: "哈基米数据中心",
         value: [0, 200],
         source: null,
         target: null,
@@ -54,7 +46,7 @@ export const getMockLiaoningData = (year = 2024) => {
       },
       {
         id: 1,
-        name: "大连分中心",
+        name: "大狗嚼分中心",
         value: [50, 300],
         source: 0,
         target: 1,
@@ -62,7 +54,7 @@ export const getMockLiaoningData = (year = 2024) => {
       },
       {
         id: 2,
-        name: "鞍山分中心",
+        name: "叮咚鸡分中心",
         value: [50, 100],
         source: 0,
         target: 2,
@@ -70,7 +62,7 @@ export const getMockLiaoningData = (year = 2024) => {
       },
       {
         id: 3,
-        name: "锦州分中心",
+        name: "南北绿豆分中心",
         value: [100, 150],
         source: 2,
         target: 3,
@@ -78,7 +70,7 @@ export const getMockLiaoningData = (year = 2024) => {
       },
       {
         id: 4,
-        name: "丹东分中心",
+        name: "阿西伽分中心",
         value: [100, 250],
         source: 1,
         target: 4,
@@ -89,13 +81,15 @@ export const getMockLiaoningData = (year = 2024) => {
 
   // 总览数据
   const totalData = {
-    total: 6000000 + year * 100000,
-    hb: Math.floor(800000 + Math.random() * 200000),
-    db: Math.floor(600000 + Math.random() * 200000),
-    hd: Math.floor(900000 + Math.random() * 200000),
-    zn: Math.floor(700000 + Math.random() * 200000),
-    xn: Math.floor(500000 + Math.random() * 200000),
-    xb: Math.floor(400000 + Math.random() * 200000),
+    total: 8000000 + year * 100000, // 哈基米总人口
+    hm: Math.floor(2000000 + Math.random() * 500000), // 哈基米指数
+    dg: Math.floor(1500000 + Math.random() * 400000), // 大狗嚼经济
+    dd: Math.floor(1800000 + Math.random() * 300000), // 叮咚鸡科技
+    nl: Math.floor(1200000 + Math.random() * 200000), // 南北绿豆农业
+    ax: Math.floor(1000000 + Math.random() * 250000), // 阿西伽文化
+    xl: Math.floor(800000 + Math.random() * 150000),  // 耐龙旅游
+    xq: Math.floor(700000 + Math.random() * 100000),  // 香企鹅生态
+    mb: Math.floor(600000 + Math.random() * 120000),  // 曼波渔业
   };
 
   // 地图数据
@@ -117,8 +111,8 @@ export const getMockLiaoningData = (year = 2024) => {
     }));
 
     // 热点数据
-    mapData.topData[y] = cities.slice(0, 5).map((city) => {
-      const coords = cityCoordinates[city] || [123.0, 41.0];
+    mapData.topData[y] = cities.slice(0, 4).map((city) => {
+      const coords = cityCoordinates[city] || [0, 0];
       return {
         name: city,
         value: [...coords, Math.floor(Math.random() * 200 * yearFactor + 100)],
@@ -126,47 +120,41 @@ export const getMockLiaoningData = (year = 2024) => {
     });
   });
 
-  // 服务器数据
+  // 哈基米特产数据
   const serverData = {
     servers: [
-      { name: "Web服务器", value: Math.floor(Math.random() * 30 + 60) },
-      { name: "数据库", value: Math.floor(Math.random() * 20 + 70) },
-      { name: "缓存服务器", value: Math.floor(Math.random() * 25 + 50) },
-      { name: "文件服务器", value: Math.floor(Math.random() * 35 + 40) },
-      { name: "备份服务器", value: Math.floor(Math.random() * 15 + 30) },
-      { name: "监控服务器", value: Math.floor(Math.random() * 20 + 45) },
+      { name: "喵咪鱼干", value: Math.floor(Math.random() * 30 + 60) },
+      { name: "狗嚼饼干", value: Math.floor(Math.random() * 20 + 70) },
+      { name: "鸡蛋布丁", value: Math.floor(Math.random() * 25 + 50) },
+      { name: "绿豆汤", value: Math.floor(Math.random() * 35 + 40) },
+      { name: "伽马射线", value: Math.floor(Math.random() * 15 + 30) },
+      { name: "龙卷风", value: Math.floor(Math.random() * 20 + 45) },
     ],
   };
 
   // 异常数据
   const abnormalData = {
     abnormals: [
-      { name: "沈阳市", value: Math.floor(Math.random() * 200 + 200) },
-      { name: "大连市", value: Math.floor(Math.random() * 150 + 150) },
-      { name: "鞍山市", value: Math.floor(Math.random() * 120 + 100) },
-      { name: "抚顺市", value: Math.floor(Math.random() * 100 + 80) },
-      { name: "本溪市", value: Math.floor(Math.random() * 80 + 60) },
-      { name: "丹东市", value: Math.floor(Math.random() * 60 + 40) },
+      { name: "哈基米", value: Math.floor(Math.random() * 200 + 200) },
+      { name: "大狗嚼", value: Math.floor(Math.random() * 150 + 150) },
+      { name: "叮咚鸡", value: Math.floor(Math.random() * 120 + 100) },
+      { name: "南北绿豆", value: Math.floor(Math.random() * 100 + 80) },
+      { name: "阿西伽", value: Math.floor(Math.random() * 80 + 60) },
+      { name: "耐龙", value: Math.floor(Math.random() * 60 + 40) },
     ],
   };
 
   // 词云数据
   const wordCloudData = {
     datas: [
-      { name: "沈阳", value: 100 },
-      { name: "大连", value: 95 },
-      { name: "鞍山钢铁", value: 85 },
-      { name: "抚顺石化", value: 70 },
-      { name: "本溪水洞", value: 65 },
-      { name: "丹东边境", value: 60 },
-      { name: "锦州湾", value: 55 },
-      { name: "营口港", value: 50 },
-      { name: "阜新煤矿", value: 45 },
-      { name: "辽阳化纤", value: 40 },
-      { name: "盘锦湿地", value: 35 },
-      { name: "铁岭新城", value: 30 },
-      { name: "朝阳化石", value: 25 },
-      { name: "葫芦岛海滨", value: 20 },
+      { name: "哈基米", value: 100 },
+      { name: "大狗嚼", value: 95 },
+      { name: "叮咚鸡", value: 85 },
+      { name: "南北绿豆", value: 70 },
+      { name: "阿西伽", value: 65 },
+      { name: "耐龙", value: 60 },
+      { name: "香企鹅", value: 55 },
+      { name: "曼波", value: 50 },
     ],
   };
 
@@ -183,20 +171,14 @@ export const getMockLiaoningData = (year = 2024) => {
   };
 };
 
-// 城市坐标映射
+// 城市坐标映射 - 猫形状布局 (映射到GeoJSON坐标系)
 const cityCoordinates = {
-  沈阳市: [123.431474, 41.805698],
-  大连市: [121.614682, 38.914003],
-  鞍山市: [122.994329, 41.108647],
-  抚顺市: [123.957208, 41.880872],
-  本溪市: [123.766485, 41.294355],
-  丹东市: [124.354706, 40.000499],
-  锦州市: [121.127003, 41.095119],
-  营口市: [122.235417, 40.667012],
-  阜新市: [121.670124, 42.021619],
-  辽阳市: [123.236944, 41.267244],
-  盘锦市: [122.069714, 41.173484],
-  铁岭市: [123.842166, 42.286131],
-  朝阳市: [120.450372, 41.573734],
-  葫芦岛市: [120.836932, 40.711052],
+  哈基米: [-177.5825492, -13.2787832],   // 猫头中心
+  大狗嚼: [-214.9598627, 61.0041041],    // 左耳区域
+  叮咚鸡: [-177.157807, 73.4952661],     // 右耳区域
+  南北绿豆: [-243.8423322, 41.142121],   // 左前爪连接线附近
+  阿西伽: [-166.1145098, 47.2255576],    // 右前爪连接线附近
+  耐龙: [-241.7186212, 29.3927995],      // 左后爪连接线附近
+  香企鹅: [-165.6897676, 43.342838],     // 右后爪连接线附近
+  曼波: [-237.046457, 18.5483919],       // 尾巴区域
 };
