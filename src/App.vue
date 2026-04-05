@@ -27,7 +27,7 @@
       <!-- 地图可视化 -->
       <MapChart
         class="bg-slate-900/55 border border-amber-200/30 shadow-[0_8px_24px_rgba(0,0,0,0.22)] backdrop-blur-md p-3 mt-2 flex-1"
-        :data="data.mapData"
+        :data="data.populationData"
       />
     </div>
     <!-- 右 -->
@@ -66,5 +66,5 @@ const loadData = async () => {
 loadData();
 setInterval(() => {
   loadData();
-}, 3000);
+}, 10000);
 </script>

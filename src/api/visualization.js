@@ -81,8 +81,8 @@ export const getMockLiaoningData = (year = 2024) => {
     mb: Math.floor(600000 + Math.random() * 120000),  // 曼波渔业
   };
 
-  // 地图数据
-  const mapData = {
+  // 地图人口数据
+  const populationData = {
     voltageLevel: [2020, 2021, 2022, 2023, 2024],
     colors: ["#5470c6", "#91cc75", "#fac858", "#ee6666", "#73c0de"],
     categoryData: {},
@@ -94,13 +94,13 @@ export const getMockLiaoningData = (year = 2024) => {
     const yearFactor = 1 + (y - 2020) * 0.1;
 
     // 城市数据
-    mapData.categoryData[y] = cities.map((city) => ({
+    populationData.categoryData[y] = cities.map((city) => ({
       name: city,
       value: Math.floor(Math.random() * 100 * yearFactor + 50),
     }));
 
     // 热点数据
-    mapData.topData[y] = cities.slice(0, 4).map((city) => {
+    populationData.topData[y] = cities.slice(0, 4).map((city) => {
       const coords = cityCoordinates[city] || [0, 0];
       return {
         name: city,
@@ -185,7 +185,7 @@ export const getMockLiaoningData = (year = 2024) => {
     haqiRiskData,
     relationData,
     totalData,
-    mapData,
+    populationData,
     hakimiGdpData,
     hakimiHappinessData,
     wordCloudData,

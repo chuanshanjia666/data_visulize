@@ -26,6 +26,19 @@ onMounted(() => {
 });
 
 const renderChart = () => {
+  const cityPalette = [
+    "#5B8FF9",
+    "#61DDAA",
+    "#65789B",
+    "#F6BD16",
+    "#7262FD",
+    "#78D3F8",
+    "#9661BC",
+    "#F6903D",
+  ];
+  const cityColorMap = {};
+  let cityColorCursor = 0;
+
   const options = {
     // 时间线
     timeline: {
@@ -81,10 +94,10 @@ const renderChart = () => {
     // 柱形图展示范围
     baseOption: {
       grid: {
-        right: "2%",
-        top: "15%",
-        bottom: "10%",
-        width: "20%",
+        right: "3%",
+        top: "12%",
+        bottom: "22%",
+        width: "14%",
       },
       // 地图配置
       geo: {
@@ -132,12 +145,23 @@ const renderChart = () => {
 
   // 柱形图
   props.data.voltageLevel.forEach((item, index) => {
+    const sortedCategoryData = [...props.data.categoryData[item]].sort((a, b) => {
+      return a.value - b.value;
+    });
+
+    sortedCategoryData.forEach((cityItem) => {
+      if (!cityColorMap[cityItem.name]) {
+        cityColorMap[cityItem.name] =
+          cityPalette[cityColorCursor % cityPalette.length];
+        cityColorCursor += 1;
+      }
+    });
+
     options.options.push({
-      backgroundColor: "#142037",
       title: [
         // 大title
         {
-          text: "2019-2023 哈基米省年度统计",
+          text: "2019-2023 哈基米省年度人口数据",
           left: 0,
           top: 0,
           textStyle: {
@@ -148,7 +172,7 @@ const renderChart = () => {
         // 小标题
         {
           id: "statistic",
-          text: item + "年哈基米省统计情况",
+          text: item + "年哈基米省人口数据情况",
           right: "0%",
           top: "4%",
           textStyle: {
@@ -162,6 +186,9 @@ const renderChart = () => {
         // 脱离0值比例
         scale: true,
         position: "top",
+        axisLabel: {
+          show: false,
+        },
         splitLine: {
           show: false,
         },
@@ -170,10 +197,6 @@ const renderChart = () => {
         },
         axisTick: {
           show: false,
-        },
-        axisLabel: {
-          margin: 2,
-          color: "#aaa",
         },
       },
       yAxis: {
@@ -190,25 +213,26 @@ const renderChart = () => {
         axisLabel: {
           interval: 0,
           color: "#ddd",
+          margin: 4,
         },
-        data: props.data.categoryData[item]
-          .sort((a, b) => {
-            return a.value - b.value;
-          })
-          .map((item) => item.name),
+        data: sortedCategoryData.map((cityItem) => cityItem.name),
       },
       series: [
         {
           type: "bar",
           zlevel: 1.5,
-          itemStyle: {
-            color: props.data.colors[index],
+          label: {
+            show: true,
+            position: "right",
+            color: "#ddd",
+            formatter: "{c}",
           },
-          data: props.data.categoryData[item]
-            .sort((a, b) => {
-              return a.value - b.value;
-            })
-            .map((item) => item.value),
+          data: sortedCategoryData.map((cityItem) => ({
+            value: cityItem.value,
+            itemStyle: {
+              color: cityColorMap[cityItem.name],
+            },
+          })),
         },
         {
           // 散点图
@@ -233,9 +257,10 @@ const renderChart = () => {
           },
           // 每一项的样式
           itemStyle: {
-            color: props.data.colors[index],
+            color: (params) => cityColorMap[params.name] || props.data.colors[index],
             shadowBlur: 5,
-            shadowColor: props.data.colors[index],
+            shadowColor: (params) =>
+              cityColorMap[params.name] || props.data.colors[index],
           },
         },
       ],
