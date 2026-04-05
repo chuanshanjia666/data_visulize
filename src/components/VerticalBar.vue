@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>【服务资源占用比】</div>
+    <div class="panel-title">哈吉米GDP</div>
     <div ref="target" class="w-full h-full"></div>
   </div>
 </template>
@@ -24,57 +24,95 @@ onMounted(() => {
 });
 
 const renderChart = () => {
+  const citySeries = props.data.citySeries || [];
+  const lineColors = [
+    "#63C7FF",
+    "#74E38A",
+    "#FFD36A",
+    "#FF9E83",
+    "#B99CFF",
+    "#57D9C8",
+    "#F49AC2",
+    "#8BE3E8",
+  ];
+
   const options = {
+    tooltip: {
+      trigger: "axis",
+      valueFormatter: (value) => `${value} 亿`,
+    },
+    legend: {
+      top: 0,
+      right: 0,
+      icon: "circle",
+      itemWidth: 8,
+      itemHeight: 8,
+      textStyle: {
+        color: "rgba(231, 242, 255, 0.86)",
+        fontSize: 10,
+      },
+      data: citySeries.map((item) => item.name),
+    },
     xAxis: {
       type: "category",
-      data: props.data.servers.map((item) => item.name),
+      boundaryGap: false,
+      data: props.data.years,
+      axisLine: {
+        lineStyle: {
+          color: "rgba(158, 177, 200, 0.45)",
+        },
+      },
+      axisTick: {
+        show: false,
+      },
       axisLabel: {
-        color: "#9eb1c8",
+        color: "#c5d8ef",
       },
     },
     yAxis: {
       type: "value",
-      show: false,
-      max: function (value) {
-        return parseInt(value.max * 1.2);
+      axisLine: {
+        show: false,
+      },
+      axisTick: {
+        show: false,
+      },
+      axisLabel: {
+        color: "#b9d0ea",
+        formatter: "{value} 亿",
+      },
+      splitLine: {
+        lineStyle: {
+          color: "rgba(158, 177, 200, 0.15)",
+          type: "dashed",
+        },
       },
     },
     grid: {
-      top: 16,
-      right: 0,
-      bottom: 26,
-      left: -26,
+      top: 36,
+      right: 8,
+      bottom: 20,
+      left: 8,
       containLabel: true,
     },
-    series: [
-      {
-        type: "bar",
-        data: props.data.servers.map((item) => ({
-          name: item.name,
-          value: item.value,
-        })),
-        // 指定每个柱子的样式
-        itemStyle: {
-          color: "#479AD3",
-          borderRadius: 5,
-          shadowColor: "rgba(0,0,0,.3)",
-          shadowBlur: 5,
-        },
-        // 指定每个柱子的宽度
-        barWidth: 12,
-        // 柱子上方的字体
-        label: {
-          show: true,
-          position: "top",
-          textStyle: {
-            color: "#fff",
-          },
-
-          // 格式化数据
-          formatter: "{c}%",
-        },
+    series: citySeries.map((item, index) => ({
+      name: item.name,
+      type: "line",
+      smooth: true,
+      symbol: "circle",
+      symbolSize: 5,
+      data: item.data,
+      lineStyle: {
+        width: 2,
+        color: lineColors[index % lineColors.length],
       },
-    ],
+      itemStyle: {
+        color: lineColors[index % lineColors.length],
+      },
+      emphasis: {
+        focus: "series",
+      },
+    })),
   };
 
   myChart.setOption(options);

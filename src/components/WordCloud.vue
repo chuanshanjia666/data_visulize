@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div>【关键词条】</div>
+    <div class="panel-title">热门词条</div>
     <div ref="target" class="w-full h-full"></div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import * as echarts from "echarts";
 import "echarts-wordcloud";
 
@@ -19,21 +19,45 @@ const props = defineProps({
 
 const target = ref(null);
 let myChart = null;
+const pageSize = 8;
+
 onMounted(() => {
   myChart = echarts.init(target.value);
   renderChart();
 });
 
-const randomRGB = () => {
-  const r = Math.floor(Math.random() * 255);
-  const g = Math.floor(Math.random() * 255);
-  const b = Math.floor(Math.random() * 255);
+const colorPalette = [
+  "#59C3FF",
+  "#7AE582",
+  "#FFD166",
+  "#FF8C78",
+  "#B794F4",
+  "#4DD6C6",
+  "#F49AC2",
+  "#8BE3E8",
+  "#FFB703",
+  "#90BE6D",
+  "#56CCF2",
+  "#F28482",
+  "#9D4EDD",
+  "#00C2A8",
+  "#FF6B6B",
+  "#A0E7E5",
+];
 
-  return `rgb(${r},${g},${b})`;
+const getDisplayWords = () => {
+  const words = props.data.datas || [];
+  return words.slice(0, pageSize);
 };
 
 const renderChart = () => {
+  const displayWords = getDisplayWords();
+
   const options = {
+    animationDuration: 800,
+    animationEasing: "cubicOut",
+    animationDurationUpdate: 900,
+    animationEasingUpdate: "quarticOut",
     tooltip: {
       show: true,
       borderColor: "#fe9a8bb3",
@@ -61,8 +85,8 @@ const renderChart = () => {
         layoutAnimation: true,
         // 字体样式
         textStyle: {
-          // 随机色值
-          color: randomRGB,
+          color: (params) =>
+            colorPalette[params.dataIndex % colorPalette.length],
         },
         // 高亮字体
         emphasis: {
@@ -71,7 +95,7 @@ const renderChart = () => {
             color: "#000",
           },
         },
-        data: props.data.datas,
+        data: displayWords,
       },
     ],
   };
@@ -80,5 +104,15 @@ const renderChart = () => {
 };
 
 // 监听数据改变重新渲染
-watch(() => props.data, renderChart);
+watch(
+  () => props.data,
+  () => {
+    renderChart();
+  },
+);
+
+onBeforeUnmount(() => {
+  myChart?.dispose();
+  myChart = null;
+});
 </script>

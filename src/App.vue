@@ -35,7 +35,7 @@
       class="flex-1 bg-slate-900/58 border border-cyan-200/25 shadow-[0_10px_30px_rgba(0,0,0,0.25)] backdrop-blur-md p-3 flex flex-col"
     >
       <!-- 竖向柱状图 -->
-      <VerticalBar class="h-1/3 box-border pb-4" :data="data.serverData" />
+      <VerticalBar class="h-1/3 box-border pb-4" :data="data.hakimiGdpData" />
       <!-- 环形图 -->
       <RingBar class="h-1/3 box-border pb-4" :data="data.hakimiHappinessData" />
       <!-- 文档云图 -->

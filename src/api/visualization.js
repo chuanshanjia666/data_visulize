@@ -109,16 +109,21 @@ export const getMockLiaoningData = (year = 2024) => {
     });
   });
 
-  // 哈基米特产数据
-  const serverData = {
-    servers: [
-      { name: "喵咪鱼干", value: Math.floor(Math.random() * 30 + 60) },
-      { name: "狗嚼饼干", value: Math.floor(Math.random() * 20 + 70) },
-      { name: "鸡蛋布丁", value: Math.floor(Math.random() * 25 + 50) },
-      { name: "绿豆汤", value: Math.floor(Math.random() * 35 + 40) },
-      { name: "伽马射线", value: Math.floor(Math.random() * 15 + 30) },
-      { name: "龙卷风", value: Math.floor(Math.random() * 20 + 45) },
-    ],
+  // 哈吉米GDP数据
+  const gdpYears = [2020, 2021, 2022, 2023, 2024];
+  const hakimiGdpData = {
+    years: gdpYears,
+    citySeries: cities.map((city, index) => {
+      const base = 420 + index * 75 + Math.floor(Math.random() * 45);
+      return {
+        name: city,
+        data: gdpYears.map((_, yearIndex) => {
+          const growth = 1 + yearIndex * (0.08 + index * 0.01);
+          const noise = Math.floor(Math.random() * 35);
+          return Math.floor(base * growth + noise);
+        }),
+      };
+    }),
   };
 
   // 哈吉米幸福指数数据
@@ -134,17 +139,45 @@ export const getMockLiaoningData = (year = 2024) => {
   };
 
   // 词云数据
+  const wordTerms = [
+    "哈基米",
+    "大狗嚼",
+    "叮咚鸡",
+    "南北绿豆",
+    "阿西伽",
+    "耐龙",
+    "香企鹅",
+    "曼波",
+    "数据中台",
+    "智慧调度",
+    "全域感知",
+    "拓扑链路",
+    "云端协同",
+    "异常监测",
+    "实时告警",
+    "趋势研判",
+    "城市画像",
+    "风险评级",
+    "资源编排",
+    "链路压测",
+    "态势推演",
+    "流量脉冲",
+    "关键节点",
+    "多源汇聚",
+    "算力分发",
+    "边缘联动",
+    "数据治理",
+    "策略引擎",
+    "统一指标",
+    "服务编组",
+  ];
   const wordCloudData = {
-    datas: [
-      { name: "哈基米", value: 100 },
-      { name: "大狗嚼", value: 95 },
-      { name: "叮咚鸡", value: 85 },
-      { name: "南北绿豆", value: 70 },
-      { name: "阿西伽", value: 65 },
-      { name: "耐龙", value: 60 },
-      { name: "香企鹅", value: 55 },
-      { name: "曼波", value: 50 },
-    ],
+    datas: wordTerms
+      .sort(() => Math.random() - 0.5)
+      .map((name, index) => ({
+        name,
+        value: Math.floor(55 + Math.random() * 80) + (30 - index),
+      })),
   };
 
   return {
@@ -153,7 +186,7 @@ export const getMockLiaoningData = (year = 2024) => {
     relationData,
     totalData,
     mapData,
-    serverData,
+    hakimiGdpData,
     hakimiHappinessData,
     wordCloudData,
     currentYear: year,

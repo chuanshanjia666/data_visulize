@@ -155,17 +155,3 @@ watch(
   },
 );
 </script>
-
-<style scoped>
-.panel-title {
-  margin-bottom: 8px;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  background: linear-gradient(90deg, #d4e9ff 0%, #a9d2ff 55%, #8bb8e4 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-</style>

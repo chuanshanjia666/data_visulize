@@ -214,13 +214,3 @@ const renderChart = () => {
 watch(() => props.data, renderChart);
 </script>
 
-<style scoped>
-.panel-title {
-  margin-bottom: 8px;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  color: #e7f5ff;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-}
-</style>
