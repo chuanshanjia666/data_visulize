@@ -33,50 +33,39 @@ export const getMockLiaoningData = (year = 2024) => {
     })),
   };
 
-  // 关系数据
+  // 关系数据：随机生成拓扑，但固定哈吉米为中心
+  const centerPoint = [50, 200];
+  const peripheralCities = cities.filter((city) => city !== "哈基米");
+
+  const relationNodes = [
+    {
+      id: 0,
+      name: "哈基米",
+      value: centerPoint,
+      source: null,
+      target: null,
+    },
+    ...peripheralCities.map((city, index) => {
+      const angle = (Math.PI * 2 * index) / peripheralCities.length + (Math.random() - 0.5) * 0.35;
+      const radius = 150 + Math.random() * 55;
+      const x = Number((centerPoint[0] + Math.cos(angle) * radius).toFixed(2));
+      const y = Number((centerPoint[1] + Math.sin(angle) * radius).toFixed(2));
+      const id = index + 1;
+      // 让节点以中心为主，也保留少量级联链路，形成动态拓扑结构
+      const source = Math.random() < 0.68 || id <= 2 ? 0 : Math.floor(Math.random() * id);
+
+      return {
+        id,
+        name: city,
+        value: [x, y],
+        source,
+        target: id,
+      };
+    }),
+  ];
+
   const relationData = {
-    relations: [
-      {
-        id: 0,
-        name: "哈基米数据中心",
-        value: [0, 200],
-        source: null,
-        target: null,
-        speed: 0,
-      },
-      {
-        id: 1,
-        name: "大狗嚼分中心",
-        value: [50, 300],
-        source: 0,
-        target: 1,
-        speed: 187,
-      },
-      {
-        id: 2,
-        name: "叮咚鸡分中心",
-        value: [50, 100],
-        source: 0,
-        target: 2,
-        speed: 154,
-      },
-      {
-        id: 3,
-        name: "南北绿豆分中心",
-        value: [100, 150],
-        source: 2,
-        target: 3,
-        speed: 100,
-      },
-      {
-        id: 4,
-        name: "阿西伽分中心",
-        value: [100, 250],
-        source: 1,
-        target: 4,
-        speed: 64,
-      },
-    ],
+    relations: relationNodes,
   };
 
   // 总览数据
