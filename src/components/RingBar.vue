@@ -6,31 +6,31 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue'
-import * as echarts from 'echarts'
+import { onMounted, ref, watch } from "vue";
+import * as echarts from "echarts";
 
 const props = defineProps({
   data: {
     type: Object,
     required: true,
   },
-})
+});
 
-const target = ref(null)
-let myChart = null
+const target = ref(null);
+let myChart = null;
 onMounted(() => {
-  myChart = echarts.init(target.value)
-  renderChart()
-})
+  myChart = echarts.init(target.value);
+  renderChart();
+});
 
 const getSeriesData = () => {
-  const series = []
+  const series = [];
   props.data.abnormals.forEach((item, index) => {
     // 上层
     series.push({
       name: item.name,
       // 饼图
-      type: 'pie',
+      type: "pie",
       // 逆时针
       clockwise: false,
       // 鼠标移入不需要展示饼图动画
@@ -38,9 +38,9 @@ const getSeriesData = () => {
         scale: false,
       },
       // 饼图半径依次递减--环形
-      radius: [73 - index * 15 + '%', 68 - index * 15 + '%'],
+      radius: [73 - index * 15 + "%", 68 - index * 15 + "%"],
       // 中心点一致
-      center: ['55%', '55%'],
+      center: ["55%", "55%"],
       // 不需要展示label
       label: {
         show: false,
@@ -52,7 +52,7 @@ const getSeriesData = () => {
         {
           value: 1000,
           itemStyle: {
-            color: 'rgba(0,0,0,0)',
+            color: "rgba(0,0,0,0)",
             borderWidth: 0,
           },
           tooltip: {
@@ -63,11 +63,11 @@ const getSeriesData = () => {
           },
         },
       ],
-    })
+    });
     // 底层
     series.push({
       name: item.name,
-      type: 'pie',
+      type: "pie",
       // 不需要任何事件
       silent: true,
       // 位于最底层
@@ -78,8 +78,8 @@ const getSeriesData = () => {
       emphasis: {
         scale: false,
       },
-      radius: [73 - index * 15 + '%', 68 - index * 15 + '%'],
-      center: ['55%', '55%'],
+      radius: [73 - index * 15 + "%", 68 - index * 15 + "%"],
+      center: ["55%", "55%"],
       label: {
         show: false,
       },
@@ -89,7 +89,7 @@ const getSeriesData = () => {
         {
           value: 7.5,
           itemStyle: {
-            color: 'rgb(3,31,62)',
+            color: "rgb(3,31,62)",
             borderWidth: 0,
           },
           tooltip: {
@@ -103,7 +103,7 @@ const getSeriesData = () => {
         {
           value: 2.5,
           itemStyle: {
-            color: 'rgba(0,0,0,0)',
+            color: "rgba(0,0,0,0)",
             borderWidth: 0,
           },
           tooltip: {
@@ -114,11 +114,11 @@ const getSeriesData = () => {
           },
         },
       ],
-    })
-  })
+    });
+  });
 
-  return series
-}
+  return series;
+};
 
 const renderChart = () => {
   const options = {
@@ -126,13 +126,13 @@ const renderChart = () => {
     legend: {
       show: true,
       // 图例形状
-      icon: 'circle',
+      icon: "circle",
       // 图例位置
-      top: '14%',
-      left: '60%',
+      top: "14%",
+      left: "60%",
       data: props.data.abnormals.map((item) => item.name),
       // width:-5
-      orient: 'vertical',
+      orient: "vertical",
       // 设置色块宽度
       itemWidth: 10,
       // 设置色块高度
@@ -143,19 +143,19 @@ const renderChart = () => {
       textStyle: {
         fontSize: 12,
         lineHeight: 5,
-        color: 'rgba(255,255,255,0.8)',
+        color: "rgba(255,255,255,0.8)",
       },
     },
     // 提示层
     tooltip: {
       show: true,
-      trigger: 'item',
-      formatter: '{a}<br>{b}:{c}{d}',
+      trigger: "item",
+      formatter: "{a}<br>{b}:{c}{d}",
     },
     //  Y轴
     yAxis: [
       {
-        type: 'category',
+        type: "category",
         inverse: true,
         axisLine: {
           show: false,
@@ -170,11 +170,11 @@ const renderChart = () => {
     ],
     // 核心配置
     series: getSeriesData(),
-  }
+  };
 
-  myChart.setOption(options)
-}
+  myChart.setOption(options);
+};
 
 // 监听数据改变重新渲染
-watch(() => props.data, renderChart)
+watch(() => props.data, renderChart);
 </script>

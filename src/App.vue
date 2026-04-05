@@ -6,7 +6,10 @@
     <!-- 左 -->
     <div class="flex-1 mr-5 bg-opacity-50 bg-slate-800 p-3 flex flex-col">
       <!-- 横向柱状图 -->
-      <HorizontalBar class="h-1/3 box-border pb-4" :data="data.regionData" />
+      <HorizontalBar
+        class="h-1/3 box-border pb-4"
+        :data="data.hakimiIndexData"
+      />
       <!-- 雷达图 -->
       <RadarBar class="h-1/3 box-border pb-4" :data="data.riskData" />
       <!-- 关系图 -->
@@ -38,26 +41,26 @@
 </template>
 
 <script setup>
-import HorizontalBar from './components/HorizontalBar.vue'
-import RadarBar from './components/RadarBar.vue'
-import Relation from './components/Relation.vue'
-import TotalData from './components/TotalData.vue'
-import MapChart from './components/MapChart.vue'
-import VerticalBar from './components/VerticalBar.vue'
-import RingBar from './components/RingBar.vue'
-import WordCloud from './components/WordCloud.vue'
+import HorizontalBar from "./components/HorizontalBar.vue";
+import RadarBar from "./components/RadarBar.vue";
+import Relation from "./components/Relation.vue";
+import TotalData from "./components/TotalData.vue";
+import MapChart from "./components/MapChart.vue";
+import VerticalBar from "./components/VerticalBar.vue";
+import RingBar from "./components/RingBar.vue";
+import WordCloud from "./components/WordCloud.vue";
 
-import { getVisualization } from './api/visualization.js'
-import { ref } from 'vue'
+import { getVisualization } from "./api/visualization.js";
+import { ref } from "vue";
 
-const data = ref(null)
+const data = ref(null);
 
 const loadData = async () => {
-  data.value = await getVisualization()
-}
+  data.value = await getVisualization();
+};
 
-loadData()
+loadData();
 setInterval(() => {
-  loadData()
-}, 3000)
+  loadData();
+}, 3000);
 </script>

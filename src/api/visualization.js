@@ -18,7 +18,7 @@ export const getMockLiaoningData = (year = 2024) => {
   const baseValue = 2020 + (year - 2020) * 50; // 哈基米指数基准值
 
   // 生成各区数据
-  const regionData = {
+  const hakimiIndexData = {
     regions: cities.map((city) => ({
       name: city,
       value: Math.floor(Math.random() * 300 + 100),
@@ -159,7 +159,7 @@ export const getMockLiaoningData = (year = 2024) => {
   };
 
   return {
-    regionData,
+    hakimiIndexData,
     riskData,
     relationData,
     totalData,

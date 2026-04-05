@@ -6,22 +6,22 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue'
-import * as echarts from 'echarts'
+import { onMounted, ref, watch } from "vue";
+import * as echarts from "echarts";
 
 const props = defineProps({
   data: {
     type: Object,
     required: true,
   },
-})
+});
 
-const target = ref(null)
-let myChart = null
+const target = ref(null);
+let myChart = null;
 onMounted(() => {
-  myChart = echarts.init(target.value)
-  renderChart()
-})
+  myChart = echarts.init(target.value);
+  renderChart();
+});
 
 const renderChart = () => {
   const options = {
@@ -29,20 +29,20 @@ const renderChart = () => {
     radar: {
       // 雷达图名字
       axisName: {
-        color: '#05D5FF',
+        color: "#05D5FF",
         fontSize: 14,
       },
       // 雷达图形状
-      shape: 'polygon',
+      shape: "polygon",
       // 居中位置
-      center: ['50%', '50%'],
-      radius: '80%',
+      center: ["50%", "50%"],
+      radius: "80%",
       // 起始角度
       startAngle: 120,
       // 轴线配置
       axisLabel: {
         lineStyle: {
-          color: 'rgba(5,213,255,.8)',
+          color: "rgba(5,213,255,.8)",
         },
       },
       // 网格线
@@ -50,7 +50,7 @@ const renderChart = () => {
         show: true,
         lineStyle: {
           width: 1,
-          color: 'rgba(5,213,255,.8)',
+          color: "rgba(5,213,255,.8)",
         },
       },
       // 指示器文字
@@ -66,8 +66,8 @@ const renderChart = () => {
     },
     // 坐标位置极点
     polar: {
-      center: ['50%', '50%'],
-      radius: '0%',
+      center: ["50%", "50%"],
+      radius: "0%",
     },
     // 坐标轴角度
     angleAxis: {
@@ -91,27 +91,27 @@ const renderChart = () => {
     },
     // 图表核心配置
     series: {
-      type: 'radar',
-      symbol: 'circle',
+      type: "radar",
+      symbol: "circle",
       // 拐角大小
       symbolSize: 10,
       // item样式
       itemStyle: {
-        color: '#05d5ff',
+        color: "#05d5ff",
       },
       // 填充区域
       areaStyle: {
-        color: '#05d5ff',
+        color: "#05d5ff",
         opacity: 0.5,
       },
       // 线条颜色
       lineStyle: {
         width: 2,
-        color: '#05d5ff',
+        color: "#05d5ff",
       },
       label: {
         show: true,
-        color: '#fff',
+        color: "#fff",
       },
       data: [
         {
@@ -119,11 +119,11 @@ const renderChart = () => {
         },
       ],
     },
-  }
+  };
 
-  myChart.setOption(options)
-}
+  myChart.setOption(options);
+};
 
 // 监听数据改变重新渲染
-watch(() => props.data, renderChart)
+watch(() => props.data, renderChart);
 </script>

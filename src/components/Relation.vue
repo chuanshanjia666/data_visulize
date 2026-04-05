@@ -6,62 +6,62 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue'
-import * as echarts from 'echarts'
+import { onMounted, ref, watch } from "vue";
+import * as echarts from "echarts";
 
 const props = defineProps({
   data: {
     type: Object,
     required: true,
   },
-})
+});
 
-const target = ref(null)
-let myChart = null
+const target = ref(null);
+let myChart = null;
 onMounted(() => {
-  myChart = echarts.init(target.value)
-  renderChart()
-})
+  myChart = echarts.init(target.value);
+  renderChart();
+});
 
 const renderChart = () => {
   const options = {
     xAxis: {
       show: false,
-      type: 'value',
+      type: "value",
     },
     yAxis: {
       show: false,
-      type: 'value',
+      type: "value",
     },
 
     series: [
       // 配置一 graph图表类型
       {
-        type: 'graph',
-        layout: 'none',
+        type: "graph",
+        layout: "none",
         // 设置二维直角坐标系
-        coordinateSystem: 'cartesian2d',
+        coordinateSystem: "cartesian2d",
         // 设置节点大小
         symbolSize: 26,
         z: 3,
         // 设置边界线条文字
         edgeLabel: {
           show: true,
-          color: '#FFF',
+          color: "#FFF",
           fontSize: 14,
           formatter: function (params) {
-            return params.data.speed
+            return params.data.speed;
           },
         },
         // 处理圆点下面的文字
         label: {
           show: true,
-          position: 'bottom',
-          color: '#5e5e5e',
+          position: "bottom",
+          color: "#5e5e5e",
         },
 
         //  线条上面的箭头
-        edgeSymbol: ['none', 'arrow'],
+        edgeSymbol: ["none", "arrow"],
         // 设置 线条上面的箭头大小
         edgeSymbolSize: 8,
         // 根据id设置不同的源数据
@@ -71,7 +71,7 @@ const renderChart = () => {
             return {
               name: item.name,
               value: item.value,
-            }
+            };
           } else {
             // 数据中心
             return {
@@ -83,10 +83,10 @@ const renderChart = () => {
                 // 渐变色
                 color: {
                   colorStops: [
-                    { offset: 0, color: '#157eff' },
+                    { offset: 0, color: "#157eff" },
                     {
                       offset: 1,
-                      color: '#35c2ff',
+                      color: "#35c2ff",
                     },
                   ],
                 },
@@ -95,7 +95,7 @@ const renderChart = () => {
               label: {
                 fontSize: 14,
               },
-            }
+            };
           }
         }),
         // 设置节点之间连接线的数据关系links
@@ -106,30 +106,30 @@ const renderChart = () => {
           // 线条样式
           lineStyle: {
             // 颜色
-            color: '#12b5d0',
+            color: "#12b5d0",
             // 曲线率
             curveness: 0.2,
           },
           // 设置线条上kb/s样式
           label: {
             show: true,
-            position: 'middle',
+            position: "middle",
             offset: [10, 0],
           },
         })),
       },
       // 配置二 lines---配置会动的箭头
       {
-        type: 'lines',
-        coordinateSystem: 'cartesian2d',
+        type: "lines",
+        coordinateSystem: "cartesian2d",
         z: 1,
         // 线特效的配置
         effect: {
           show: true,
           smooth: false,
           trailLength: 0,
-          symbol: 'arrow',
-          color: 'rgba(55,155,255,0.6)',
+          symbol: "arrow",
+          color: "rgba(55,155,255,0.6)",
           symbolSize: 12,
         },
         lineStyle: {
@@ -138,18 +138,38 @@ const renderChart = () => {
         },
         // 线的数据级，前后线需要重合。数据固定
         data: [
-          { coords: [[0, 300], [50, 200]] },
-          { coords: [[0, 100], [50, 200]] },
-          { coords: [[50, 200], [100, 100]] },
-          { coords: [[50, 200], [100, 300]] },
+          {
+            coords: [
+              [0, 300],
+              [50, 200],
+            ],
+          },
+          {
+            coords: [
+              [0, 100],
+              [50, 200],
+            ],
+          },
+          {
+            coords: [
+              [50, 200],
+              [100, 100],
+            ],
+          },
+          {
+            coords: [
+              [50, 200],
+              [100, 300],
+            ],
+          },
         ],
       },
     ],
-  }
+  };
 
-  myChart.setOption(options)
-}
+  myChart.setOption(options);
+};
 
 // 监听数据改变重新渲染
-watch(() => props.data, renderChart)
+watch(() => props.data, renderChart);
 </script>
