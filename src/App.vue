@@ -66,5 +66,5 @@ const loadData = async () => {
 loadData();
 setInterval(() => {
   loadData();
-}, 10000);
+}, 20000);
 </script>

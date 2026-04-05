@@ -1,87 +1,66 @@
 <template>
-  <div class="p-6">
-    <div class="text-slate-300 text-center">
-      数据总量：
-      <span
-        ref="totalCountTarget"
-        class="text-7xl ml-2 mr-2 font-bold font-[Electronic] text-gradient"
-      >
-        679,473,929
-      </span>
-      条记录
+  <div class="p-3 h-40 flex flex-col overflow-hidden">
+    <div class="text-slate-300 text-center text-sm tracking-[0.22em]">
+      城市风采
     </div>
-    <div class="mt-3 flex flex-wrap">
-      <div class="w-1/3 text-center text-slate-400 text-sm">
-        华北：
-        <span ref="city1" class="text-[#5DC5EF] text-3xl font-[Electronic]">
-          8,778,988
-        </span>
-      </div>
-      <div class="w-1/3 text-center text-slate-400 text-sm">
-        东北：<span
-          ref="city2"
-          class="text-[#5DC5EF] text-3xl font-[Electronic]"
-          >8,778,988</span
+    <div class="text-slate-300 text-center text-sm tracking-[0.22em]">
+      哈吉米省是一座文化背景丰富的美丽城市，拥有独特的景观
+    </div>
+    <div class="mt-2 h-20 rounded-xl overflow-hidden border border-cyan-200/15 bg-slate-950/20 shrink-0">
+      <div class="h-full grid grid-cols-3 gap-2 px-2 items-center">
+        <div
+          v-for="(item, index) in visibleImages"
+          :key="`${item}-${index}`"
+          class="h-full rounded-lg overflow-hidden bg-black/10 flex items-center justify-center"
         >
-      </div>
-      <div class="w-1/3 text-center text-slate-400 text-sm">
-        华东：<span
-          ref="city3"
-          class="text-[#5DC5EF] text-3xl font-[Electronic]"
-          >8,778,988</span
-        >
-      </div>
-      <div class="w-1/3 text-center text-slate-400 text-sm">
-        中南：<span
-          ref="city4"
-          class="text-[#5DC5EF] text-3xl font-[Electronic]"
-          >8,778,988</span
-        >
-      </div>
-      <div class="w-1/3 text-center text-slate-400 text-sm">
-        西南：<span
-          ref="city5"
-          class="text-[#5DC5EF] text-3xl font-[Electronic]"
-          >8,778,988</span
-        >
-      </div>
-      <div class="w-1/3 text-center text-slate-400 text-sm">
-        西北：<span
-          ref="city6"
-          class="text-[#5DC5EF] text-3xl font-[Electronic]"
-          >8,778,988</span
-        >
+          <img
+            :src="item"
+            class="h-[88%] w-full object-contain"
+            alt="城市风采"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { CountUp } from "countup.js";
+import { computed, onMounted, onUnmounted, ref } from "vue";
+import meme1 from "../assets/imgs/meme1.gif";
+import meme2 from "../assets/imgs/meme2.gif";
+import meme3 from "../assets/imgs/meme3.gif";
+import meme4 from "../assets/imgs/meme4.gif";
+import meme5 from "../assets/imgs/meme5.gif";
+import meme6 from "../assets/imgs/meme6.gif";
+import meme7 from "../assets/imgs/meme7.gif";
+import meme8 from "../assets/imgs/meme8.gif";
+import meme9 from "../assets/imgs/meme9.gif";
 
-const props = defineProps({
-  data: {
-    type: Object,
-    required: true,
-  },
+const memeImages = [meme1, meme2, meme3, meme4, meme5, meme6, meme7, meme8, meme9];
+const currentStartIndex = ref(0);
+
+const visibleImages = computed(() => {
+  const result = [];
+
+  for (let offset = 0; offset < 3; offset += 1) {
+    const imageIndex = (currentStartIndex.value + offset) % memeImages.length;
+    result.push(memeImages[imageIndex]);
+  }
+
+  return result;
 });
 
-const totalCountTarget = ref(null);
-const city1 = ref(null);
-const city2 = ref(null);
-const city3 = ref(null);
-const city4 = ref(null);
-const city5 = ref(null);
-const city6 = ref(null);
+let timerId = null;
 
 onMounted(() => {
-  new CountUp(totalCountTarget.value, props.data.total).start();
-  new CountUp(city1.value, props.data.hb).start();
-  new CountUp(city2.value, props.data.db).start();
-  new CountUp(city3.value, props.data.hd).start();
-  new CountUp(city4.value, props.data.zn).start();
-  new CountUp(city5.value, props.data.xn).start();
-  new CountUp(city6.value, props.data.xb).start();
+  timerId = window.setInterval(() => {
+    currentStartIndex.value = (currentStartIndex.value + 3) % memeImages.length;
+  }, 5000);
+});
+
+onUnmounted(() => {
+  if (timerId) {
+    window.clearInterval(timerId);
+  }
 });
 </script>

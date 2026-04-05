@@ -19,8 +19,29 @@ const props = defineProps({
 const target = ref(null);
 let myChart = null;
 onMounted(() => {
+  const mapAreaCityNames = [
+    "南北绿豆",
+    "大狗嚼",
+    "叮咚鸡",
+    "哈基米",
+    "阿西伽",
+    "耐龙",
+    "香企鹅",
+    "曼波",
+  ];
+  // 8个可填充区域（2个圆 + 6个三角）在 GeoJSON 中的索引
+  const areaFeatureIndexes = [0, 1, 2, 3, 10, 11, 12, 13];
+  const namedMapJson = JSON.parse(JSON.stringify(mapJson));
+
+  areaFeatureIndexes.forEach((featureIndex, idx) => {
+    const feature = namedMapJson.features?.[featureIndex];
+    if (!feature) return;
+    feature.properties = feature.properties || {};
+    feature.properties.name = mapAreaCityNames[idx];
+  });
+
   // 注册地图json文件
-  echarts.registerMap("cat", mapJson);
+  echarts.registerMap("cat", namedMapJson);
   myChart = echarts.init(target.value);
   renderChart();
 });
@@ -47,7 +68,7 @@ const renderChart = () => {
       // 时间线自动切换
       autoPlay: true,
       // 切换时间
-      playInterval: 3000,
+      playInterval: 4000,
       // 时间轴位置
       left: "10%",
       right: "10%",
@@ -94,10 +115,11 @@ const renderChart = () => {
     // 柱形图展示范围
     baseOption: {
       grid: {
-        right: "3%",
-        top: "12%",
+        right: "2%",
+        top: "14%",
         bottom: "22%",
-        width: "14%",
+        width: "36%",
+        height: "24%",
       },
       // 地图配置
       geo: {
@@ -105,9 +127,9 @@ const renderChart = () => {
         map: "cat",
         // 开启缩放
         roam: true,
-        zoom: 1.2,
+        zoom: 1.08,
         // 中心点==经纬度
-        center: [-170.3248152, 44.5658476],
+        center: [-142.0, 12.0],
         // 默认状态下省份样式
         itemStyle: {
           borderColor: "rgba(147,235,248,1)",
@@ -130,12 +152,13 @@ const renderChart = () => {
               },
             ],
           },
-          // 鼠标移入高亮色值设置
-          emphasis: {
-            itemStyle: {
-              areaColor: "#389BB7",
-              borderWidth: 0,
-            },
+        },
+        // 仅高亮当前悬停的城市区域
+        emphasis: {
+          itemStyle: {
+            areaColor: "rgba(56,155,183,0.55)",
+            borderColor: "#8de8ff",
+            borderWidth: 2,
           },
         },
       },
@@ -146,8 +169,25 @@ const renderChart = () => {
   // 柱形图
   props.data.voltageLevel.forEach((item, index) => {
     const sortedCategoryData = [...props.data.categoryData[item]].sort((a, b) => {
-      return a.value - b.value;
+      return b.value - a.value;
     });
+    const cityValueMap = Object.fromEntries(
+      props.data.categoryData[item].map((cityItem) => [cityItem.name, cityItem.value])
+    );
+    const valueList = Object.values(cityValueMap);
+    const minValue = Math.min(...valueList);
+    const maxValue = Math.max(...valueList);
+    const toSymbolSize = (cityName) => {
+      const value = cityValueMap[cityName] ?? minValue;
+      if (maxValue === minValue) return 16;
+      const normalized = (value - minValue) / (maxValue - minValue);
+      return 10 + normalized * 16;
+    };
+    const mapScatterData = props.data.topData[item].map((cityPoint) => ({
+      ...cityPoint,
+      barValue: cityValueMap[cityPoint.name] ?? 0,
+      symbolSizeByBar: toSymbolSize(cityPoint.name),
+    }));
 
     sortedCategoryData.forEach((cityItem) => {
       if (!cityColorMap[cityItem.name]) {
@@ -158,6 +198,16 @@ const renderChart = () => {
     });
 
     options.options.push({
+      tooltip: {
+        trigger: "item",
+        formatter: (params) => {
+          if (params.seriesType === "map") {
+            const value = params.value ?? 0;
+            return `${params.name}<br/>人口数据: ${value}`;
+          }
+          return "";
+        },
+      },
       title: [
         // 大title
         {
@@ -182,25 +232,18 @@ const renderChart = () => {
         },
       ],
       xAxis: {
-        type: "value",
-        // 脱离0值比例
-        scale: true,
-        position: "top",
+        type: "category",
+        data: sortedCategoryData.map((cityItem) => cityItem.name),
         axisLabel: {
-          show: false,
+          interval: 0,
+          color: "#ddd",
+          rotate: 20,
+          margin: 16,
+          fontSize: 11,
         },
         splitLine: {
           show: false,
         },
-        axisLine: {
-          show: false,
-        },
-        axisTick: {
-          show: false,
-        },
-      },
-      yAxis: {
-        type: "category",
         axisLine: {
           show: true,
           lineStyle: {
@@ -210,20 +253,68 @@ const renderChart = () => {
         axisTick: {
           show: false,
         },
-        axisLabel: {
-          interval: 0,
-          color: "#ddd",
-          margin: 4,
+      },
+      yAxis: {
+        type: "value",
+        scale: true,
+        axisLine: {
+          show: false,
         },
-        data: sortedCategoryData.map((cityItem) => cityItem.name),
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
       },
       series: [
         {
+          type: "map",
+          map: "cat",
+          geoIndex: 0,
+          selectedMode: false,
+          roam: false,
+          zlevel: 1,
+          // 用透明填充承载交互数据，不改变底图视觉
+          itemStyle: {
+            areaColor: "rgba(0,0,0,0)",
+            borderColor: "rgba(0,0,0,0)",
+          },
+          emphasis: {
+            itemStyle: {
+              areaColor: "rgba(56,155,183,0.55)",
+              borderColor: "#8de8ff",
+              borderWidth: 2,
+            },
+            label: {
+              show: false,
+            },
+          },
+          select: {
+            disabled: true,
+            itemStyle: {
+              areaColor: "rgba(0,0,0,0)",
+              borderColor: "rgba(0,0,0,0)",
+            },
+            label: {
+              show: false,
+            },
+          },
+          data: props.data.categoryData[item].map((cityItem) => ({
+            name: cityItem.name,
+            value: cityItem.value,
+          })),
+        },
+        {
           type: "bar",
           zlevel: 1.5,
+          barMaxWidth: 18,
           label: {
             show: true,
-            position: "right",
+            position: "top",
             color: "#ddd",
             formatter: "{c}",
           },
@@ -240,10 +331,13 @@ const renderChart = () => {
           // 指定散点图坐标系
           coordinateSystem: "geo",
           // 数据==>省份名 经纬度 数据
-          data: props.data.topData[item],
+          data: mapScatterData,
+          tooltip: {
+            show: false,
+          },
           // 点的大小
-          symbolSize: function (val) {
-            return val[2] / 6;
+          symbolSize: function (val, params) {
+            return params?.data?.symbolSizeByBar ?? 10;
           },
           // 绘制波纹特效
           rippleEffect: {
