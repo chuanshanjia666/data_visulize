@@ -25,9 +25,9 @@ export const getMockLiaoningData = (year = 2024) => {
     })),
   };
 
-  // 风险数据
-  const riskData = {
-    risks: cities.slice(0, 6).map((city) => ({
+  // 哈气风险数据
+  const haqiRiskData = {
+    haqiRisks: cities.map((city) => ({
       name: city,
       value: Math.floor(Math.random() * 40 + 40),
     })),
@@ -160,7 +160,7 @@ export const getMockLiaoningData = (year = 2024) => {
 
   return {
     hakimiIndexData,
-    riskData,
+    haqiRiskData,
     relationData,
     totalData,
     mapData,

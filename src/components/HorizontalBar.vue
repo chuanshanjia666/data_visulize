@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>【大区数据信息】</div>
+    <div class="panel-title">哈吉米指数</div>
     <div ref="target" class="w-full h-full"></div>
   </div>
 </template>
@@ -19,15 +19,15 @@ const props = defineProps({
 // 1.初始化 echarts 实例
 let myChart = null;
 const target = ref(null);
-const cityColors = [
-  "#2E86DE",
-  "#16A085",
-  "#F39C12",
-  "#E74C3C",
-  "#8E44AD",
-  "#27AE60",
-  "#D35400",
-  "#1ABC9C",
+const cityGradientPairs = [
+  ["#64A6E8", "#2E86DE"],
+  ["#45B7A5", "#16A085"],
+  ["#F7B75A", "#F39C12"],
+  ["#EF7A6F", "#E74C3C"],
+  ["#A56BC2", "#8E44AD"],
+  ["#56C584", "#27AE60"],
+  ["#DF7C46", "#D35400"],
+  ["#45D4BC", "#1ABC9C"],
 ];
 
 onMounted(() => {
@@ -61,6 +61,7 @@ const renderChart = () => {
       },
       axisLabel: {
         color: "#b6c7d9",
+        fontSize: 11,
       },
       splitLine: {
         show: true,
@@ -86,6 +87,8 @@ const renderChart = () => {
       },
       axisLabel: {
         color: "#9eb1c8",
+        fontSize: 12,
+        fontWeight: 500,
       },
     },
     // 图表绘制的位置 对应 上下左右
@@ -111,10 +114,17 @@ const renderChart = () => {
         },
         // 指定每个柱子的样式
         itemStyle: {
-          color: (params) => cityColors[params.dataIndex % cityColors.length],
+          color: (params) => {
+            const [start, end] =
+              cityGradientPairs[params.dataIndex % cityGradientPairs.length];
+            return new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+              { offset: 0, color: start },
+              { offset: 1, color: end },
+            ]);
+          },
           borderRadius: 0,
-          shadowColor: "rgba(0,0,0,.3)",
-          shadowBlur: 5,
+          shadowColor: "rgba(0,0,0,.18)",
+          shadowBlur: 4,
         },
         // 指定每个柱子的宽度
         barWidth: 12,
@@ -122,8 +132,12 @@ const renderChart = () => {
         label: {
           show: true,
           position: "right",
-          color: "#fff",
+          color: "#e7f1ff",
+          fontSize: 12,
+          fontWeight: 600,
           formatter: "{c}",
+          textShadowColor: "rgba(0,0,0,0.25)",
+          textShadowBlur: 2,
         },
       },
     ],
@@ -141,3 +155,17 @@ watch(
   },
 );
 </script>
+
+<style scoped>
+.panel-title {
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  background: linear-gradient(90deg, #d4e9ff 0%, #a9d2ff 55%, #8bb8e4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>【云端报警风险】</div>
+    <div class="panel-title">哈气风险</div>
     <div ref="target" class="w-full h-full"></div>
   </div>
 </template>
@@ -24,25 +24,33 @@ onMounted(() => {
 });
 
 const renderChart = () => {
+  const riskList = props.data.haqiRisks || [];
+
   const options = {
+    tooltip: {
+      trigger: "item",
+    },
     // 雷达图的坐标系配置
     radar: {
       // 雷达图名字
       axisName: {
-        color: "#05D5FF",
-        fontSize: 14,
+        color: "#d1e8ff",
+        fontSize: 12,
+        fontWeight: 600,
       },
       // 雷达图形状
       shape: "polygon",
       // 居中位置
       center: ["50%", "50%"],
-      radius: "80%",
+      radius: "72%",
       // 起始角度
-      startAngle: 120,
+      startAngle: 90,
+      // 分割段数
+      splitNumber: 5,
       // 轴线配置
-      axisLabel: {
+      axisLine: {
         lineStyle: {
-          color: "rgba(5,213,255,.8)",
+          color: "rgba(126, 170, 214, 0.55)",
         },
       },
       // 网格线
@@ -50,43 +58,20 @@ const renderChart = () => {
         show: true,
         lineStyle: {
           width: 1,
-          color: "rgba(5,213,255,.8)",
+          color: "rgba(126, 170, 214, 0.35)",
         },
       },
       // 指示器文字
-      indicator: props.data.risks.map((item) => ({
+      indicator: riskList.map((item) => ({
         name: item.name,
         max: 100,
       })),
 
-      // 不拆分区域
       splitArea: {
-        show: false,
-      },
-    },
-    // 坐标位置极点
-    polar: {
-      center: ["50%", "50%"],
-      radius: "0%",
-    },
-    // 坐标轴角度
-    angleAxis: {
-      // 最小角度
-      min: 0,
-      // 分割线间隔
-      interval: 5,
-      // 逆时针方向
-      clockwise: false,
-    },
-    // 径向轴
-    radiusAxis: {
-      //  最小值
-      min: 0,
-      // 间隔
-      interval: 20,
-      // 不展示分割线
-      splitLine: {
         show: true,
+        areaStyle: {
+          color: ["rgba(84, 130, 178, 0.08)", "rgba(84, 130, 178, 0.02)"],
+        },
       },
     },
     // 图表核心配置
@@ -94,28 +79,40 @@ const renderChart = () => {
       type: "radar",
       symbol: "circle",
       // 拐角大小
-      symbolSize: 10,
+      symbolSize: 7,
       // item样式
       itemStyle: {
-        color: "#05d5ff",
+        color: "#8ec5ff",
+        borderColor: "#dff1ff",
+        borderWidth: 1,
       },
       // 填充区域
       areaStyle: {
-        color: "#05d5ff",
-        opacity: 0.5,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: "rgba(120, 186, 255, 0.42)",
+          },
+          {
+            offset: 1,
+            color: "rgba(120, 186, 255, 0.16)",
+          },
+        ]),
       },
       // 线条颜色
       lineStyle: {
-        width: 2,
-        color: "#05d5ff",
+        width: 2.5,
+        color: "#8ec5ff",
       },
       label: {
         show: true,
-        color: "#fff",
+        color: "#e7f2ff",
+        fontSize: 11,
+        fontWeight: 600,
       },
       data: [
         {
-          value: props.data.risks.map((item) => item.value),
+          value: riskList.map((item) => item.value),
         },
       ],
     },
@@ -127,3 +124,17 @@ const renderChart = () => {
 // 监听数据改变重新渲染
 watch(() => props.data, renderChart);
 </script>
+
+<style scoped>
+.panel-title {
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  background: linear-gradient(90deg, #d8ecff 0%, #b8dbff 55%, #94c2eb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+</style>

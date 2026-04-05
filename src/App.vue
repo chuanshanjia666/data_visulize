@@ -4,14 +4,16 @@
     v-if="data"
   >
     <!-- 左 -->
-    <div class="flex-1 mr-5 bg-opacity-50 bg-slate-800 p-3 flex flex-col">
+    <div
+      class="flex-1 mr-5 bg-slate-900/58 border border-emerald-200/25 shadow-[0_10px_30px_rgba(0,0,0,0.25)] backdrop-blur-md p-3 flex flex-col"
+    >
       <!-- 横向柱状图 -->
       <HorizontalBar
         class="h-1/3 box-border pb-4"
         :data="data.hakimiIndexData"
       />
       <!-- 雷达图 -->
-      <RadarBar class="h-1/3 box-border pb-4" :data="data.riskData" />
+      <RadarBar class="h-1/3 box-border pb-4" :data="data.haqiRiskData" />
       <!-- 关系图 -->
       <Relation class="h-1/3" :data="data.relationData" />
     </div>
@@ -19,17 +21,19 @@
     <div class="w-1/2 mr-5 flex flex-col">
       <!-- 数据总览图 -->
       <TotalData
-        class="bg-opacity-50 bg-slate-800 p-3"
+        class="bg-slate-900/55 border border-amber-200/30 shadow-[0_8px_24px_rgba(0,0,0,0.22)] backdrop-blur-md p-3"
         :data="data.totalData"
       />
       <!-- 地图可视化 -->
       <MapChart
-        class="bg-opacity-50 bg-slate-800 p-3 mt-2 flex-1"
+        class="bg-slate-900/55 border border-amber-200/30 shadow-[0_8px_24px_rgba(0,0,0,0.22)] backdrop-blur-md p-3 mt-2 flex-1"
         :data="data.mapData"
       />
     </div>
     <!-- 右 -->
-    <div class="flex-1 bg-opacity-50 bg-slate-800 p-3 flex flex-col">
+    <div
+      class="flex-1 bg-slate-900/58 border border-cyan-200/25 shadow-[0_10px_30px_rgba(0,0,0,0.25)] backdrop-blur-md p-3 flex flex-col"
+    >
       <!-- 竖向柱状图 -->
       <VerticalBar class="h-1/3 box-border pb-4" :data="data.serverData" />
       <!-- 环形图 -->
