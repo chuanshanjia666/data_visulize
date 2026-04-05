@@ -121,9 +121,9 @@ export const getMockLiaoningData = (year = 2024) => {
     ],
   };
 
-  // 异常数据
-  const abnormalData = {
-    abnormals: [
+  // 哈吉米幸福指数数据
+  const hakimiHappinessData = {
+    happinessIndexes: [
       { name: "哈基米", value: Math.floor(Math.random() * 200 + 200) },
       { name: "大狗嚼", value: Math.floor(Math.random() * 150 + 150) },
       { name: "叮咚鸡", value: Math.floor(Math.random() * 120 + 100) },
@@ -154,7 +154,7 @@ export const getMockLiaoningData = (year = 2024) => {
     totalData,
     mapData,
     serverData,
-    abnormalData,
+    hakimiHappinessData,
     wordCloudData,
     currentYear: year,
   };

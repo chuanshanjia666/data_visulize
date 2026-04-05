@@ -37,7 +37,7 @@
       <!-- 竖向柱状图 -->
       <VerticalBar class="h-1/3 box-border pb-4" :data="data.serverData" />
       <!-- 环形图 -->
-      <RingBar class="h-1/3 box-border pb-4" :data="data.abnormalData" />
+      <RingBar class="h-1/3 box-border pb-4" :data="data.hakimiHappinessData" />
       <!-- 文档云图 -->
       <WordCloud class="h-1/3" :data="data.wordCloudData" />
     </div>
