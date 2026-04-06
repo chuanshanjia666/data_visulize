@@ -4,9 +4,11 @@
       城市风采
     </div>
     <div class="text-slate-300 text-center text-sm tracking-[0.22em]">
-      哈吉米省是一座文化背景丰富的美丽城市，拥有独特的景观
+      辽宁省山海相映、人文荟萃，展示九处代表性风景
     </div>
-    <div class="mt-2 h-20 rounded-xl overflow-hidden border border-cyan-200/15 bg-slate-950/20 shrink-0">
+    <div
+      class="mt-2 h-20 rounded-xl overflow-hidden border border-cyan-200/15 bg-slate-950/20 shrink-0"
+    >
       <div class="h-full grid grid-cols-3 gap-2 px-2 items-center">
         <div
           v-for="(item, index) in visibleImages"
@@ -15,8 +17,10 @@
         >
           <img
             :src="item"
-            class="h-[88%] w-full object-contain"
-            alt="城市风采"
+            class="h-[88%] w-full object-cover"
+            alt="辽宁风景"
+            loading="lazy"
+            referrerpolicy="no-referrer"
           />
         </div>
       </div>
@@ -26,25 +30,27 @@
 
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from "vue";
-import meme1 from "../assets/imgs/meme1.gif";
-import meme2 from "../assets/imgs/meme2.gif";
-import meme3 from "../assets/imgs/meme3.gif";
-import meme4 from "../assets/imgs/meme4.gif";
-import meme5 from "../assets/imgs/meme5.gif";
-import meme6 from "../assets/imgs/meme6.gif";
-import meme7 from "../assets/imgs/meme7.gif";
-import meme8 from "../assets/imgs/meme8.gif";
-import meme9 from "../assets/imgs/meme9.gif";
 
-const memeImages = [meme1, meme2, meme3, meme4, meme5, meme6, meme7, meme8, meme9];
+const liaoningSceneryImages = [
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Mukden_palace_gate06.jpg",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Mukden_palace_Chongzheng_Hall_01.jpg",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Mukden_palace_Chongzheng_Hall_02.jpg",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Mukden_palace_Chongzheng_Hall_03.jpg",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Mukden_palace_Chongzheng_Hall_04.jpg",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Mukden_palace_Chongzheng_Hall_05.jpg",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Mukden_palace_Dazheng_Hall.jpg",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Mukden_palace_gate01.jpg",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Mukden_palace_library01.jpg",
+];
 const currentStartIndex = ref(0);
 
 const visibleImages = computed(() => {
   const result = [];
 
   for (let offset = 0; offset < 3; offset += 1) {
-    const imageIndex = (currentStartIndex.value + offset) % memeImages.length;
-    result.push(memeImages[imageIndex]);
+    const imageIndex =
+      (currentStartIndex.value + offset) % liaoningSceneryImages.length;
+    result.push(liaoningSceneryImages[imageIndex]);
   }
 
   return result;
@@ -54,7 +60,8 @@ let timerId = null;
 
 onMounted(() => {
   timerId = window.setInterval(() => {
-    currentStartIndex.value = (currentStartIndex.value + 3) % memeImages.length;
+    currentStartIndex.value =
+      (currentStartIndex.value + 3) % liaoningSceneryImages.length;
   }, 5000);
 });
 

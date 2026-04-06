@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="panel-title">哈气风险</div>
+    <div class="panel-title">辽宁省物流风险指数</div>
     <div ref="target" class="w-full h-full"></div>
   </div>
 </template>
@@ -24,7 +24,7 @@ onMounted(() => {
 });
 
 const renderChart = () => {
-  const riskList = props.data.haqiRisks || [];
+  const riskList = props.data.logisticsRisks || [];
 
   const options = {
     tooltip: {

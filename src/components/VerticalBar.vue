@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="panel-title">哈吉米GDP</div>
+    <div class="panel-title">城市GDP</div>
     <div ref="target" class="w-full h-full"></div>
   </div>
 </template>
@@ -42,11 +42,13 @@ const renderChart = () => {
       valueFormatter: (value) => `${value} 亿`,
     },
     legend: {
-      top: 0,
+      top: 2,
+      left: 0,
       right: 0,
       icon: "circle",
       itemWidth: 8,
       itemHeight: 8,
+      itemGap: 10,
       textStyle: {
         color: "rgba(231, 242, 255, 0.86)",
         fontSize: 10,
@@ -67,6 +69,7 @@ const renderChart = () => {
       },
       axisLabel: {
         color: "#c5d8ef",
+        showMaxLabel: true,
       },
     },
     yAxis: {
@@ -89,10 +92,10 @@ const renderChart = () => {
       },
     },
     grid: {
-      top: 36,
-      right: 8,
-      bottom: 20,
-      left: 8,
+      top: 58,
+      right: 20,
+      bottom: 22,
+      left: 16,
       containLabel: true,
     },
     series: citySeries.map((item, index) => ({

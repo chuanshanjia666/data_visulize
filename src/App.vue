@@ -10,12 +10,15 @@
       <!-- 横向柱状图 -->
       <HorizontalBar
         class="h-1/3 box-border pb-4"
-        :data="data.hakimiIndexData"
+        :data="data.liaoningCityDevelopmentData"
       />
       <!-- 雷达图 -->
-      <RadarBar class="h-1/3 box-border pb-4" :data="data.haqiRiskData" />
+      <RadarBar
+        class="h-1/3 box-border pb-4"
+        :data="data.liaoningLogisticsRiskData"
+      />
       <!-- 关系图 -->
-      <Relation class="h-1/3" :data="data.relationData" />
+      <Relation class="h-1/3" :data="data.liaoningLogisticsTopologyData" />
     </div>
     <!-- 中 -->
     <div class="w-1/2 mr-5 flex flex-col">
@@ -37,7 +40,10 @@
       <!-- 竖向柱状图 -->
       <VerticalBar class="h-1/3 box-border pb-4" :data="data.hakimiGdpData" />
       <!-- 环形图 -->
-      <RingBar class="h-1/3 box-border pb-4" :data="data.hakimiHappinessData" />
+      <RingBar
+        class="h-1/3 box-border pb-4"
+        :data="data.liaoningCityHappinessData"
+      />
       <!-- 文档云图 -->
       <WordCloud class="h-1/3" :data="data.wordCloudData" />
     </div>

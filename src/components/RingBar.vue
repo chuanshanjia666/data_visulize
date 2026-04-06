@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="panel-title">哈吉米幸福指数</div>
+    <div class="panel-title">辽宁省城市幸福指数</div>
     <div ref="target" class="w-full h-full"></div>
   </div>
 </template>
@@ -35,13 +35,14 @@ const getSeriesData = () => {
 
   return [
     {
-      name: "哈吉米幸福指数",
+      name: "辽宁省城市幸福指数",
       type: "pie",
-      radius: ["15%", "68%"],
-      center: ["38%", "57%"],
+      radius: ["16%", "58%"],
+      center: ["43%", "57%"],
       roseType: "radius",
       clockwise: true,
       padAngle: 2,
+      avoidLabelOverlap: true,
       itemStyle: {
         borderRadius: 2,
         borderColor: "rgba(255,255,255,0.22)",
@@ -52,10 +53,11 @@ const getSeriesData = () => {
         fontSize: 11,
         fontWeight: 600,
         formatter: "{b}\n{c}",
+        edgeDistance: 8,
       },
       labelLine: {
-        length: 12,
-        length2: 8,
+        length: 10,
+        length2: 6,
         lineStyle: {
           color: "rgba(255,255,255,0.55)",
         },
@@ -64,7 +66,7 @@ const getSeriesData = () => {
         scale: true,
         scaleSize: 6,
       },
-      data: props.data.happinessIndexes.map((item, index) => ({
+      data: props.data.cityHappinessIndexes.map((item, index) => ({
         name: item.name,
         value: item.value,
         itemStyle: {
@@ -85,7 +87,7 @@ const renderChart = () => {
       // 图例位置
       top: "16%",
       right: "4%",
-      data: props.data.happinessIndexes.map((item) => item.name),
+      data: props.data.cityHappinessIndexes.map((item) => item.name),
       // width:-5
       orient: "vertical",
       // 设置色块宽度

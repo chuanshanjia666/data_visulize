@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="panel-title">哈吉米指数</div>
+    <div class="panel-title">辽宁省城市发展指数</div>
     <div ref="target" class="w-full h-full"></div>
   </div>
 </template>
@@ -74,7 +74,7 @@ const renderChart = () => {
     // y轴展示数据
     yAxis: {
       type: "category",
-      data: props.data.regions.map((item) => item.name),
+      data: props.data.cityDevelopmentIndexes.map((item) => item.name),
       inverse: true,
       axisLine: {
         show: true,
@@ -103,7 +103,7 @@ const renderChart = () => {
     series: [
       {
         type: "bar",
-        data: props.data.regions.map((item) => ({
+        data: props.data.cityDevelopmentIndexes.map((item) => ({
           name: item.name,
           value: item.value,
         })),

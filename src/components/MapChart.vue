@@ -6,8 +6,10 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import mapJson from "../assets/MapData/cat.json";
 import * as echarts from "echarts";
+
+const LIAONING_GEOJSON_URL = "https://geojson.cn/api/china/1.6.3/210000.json";
+const MAP_NAME = "liaoning";
 
 const props = defineProps({
   data: {
@@ -18,30 +20,19 @@ const props = defineProps({
 
 const target = ref(null);
 let myChart = null;
-onMounted(() => {
-  const mapAreaCityNames = [
-    "南北绿豆",
-    "大狗嚼",
-    "叮咚鸡",
-    "哈基米",
-    "阿西伽",
-    "耐龙",
-    "香企鹅",
-    "曼波",
-  ];
-  // 8个可填充区域（2个圆 + 6个三角）在 GeoJSON 中的索引
-  const areaFeatureIndexes = [0, 1, 2, 3, 10, 11, 12, 13];
-  const namedMapJson = JSON.parse(JSON.stringify(mapJson));
+onMounted(async () => {
+  try {
+    const response = await fetch(LIAONING_GEOJSON_URL);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const mapJson = await response.json();
+    echarts.registerMap(MAP_NAME, mapJson);
+  } catch (error) {
+    console.error("加载辽宁地图数据失败:", error);
+    return;
+  }
 
-  areaFeatureIndexes.forEach((featureIndex, idx) => {
-    const feature = namedMapJson.features?.[featureIndex];
-    if (!feature) return;
-    feature.properties = feature.properties || {};
-    feature.properties.name = mapAreaCityNames[idx];
-  });
-
-  // 注册地图json文件
-  echarts.registerMap("cat", namedMapJson);
   myChart = echarts.init(target.value);
   renderChart();
 });
@@ -124,12 +115,12 @@ const renderChart = () => {
       // 地图配置
       geo: {
         show: true,
-        map: "cat",
+        map: MAP_NAME,
         // 开启缩放
         roam: true,
-        zoom: 1.08,
+        zoom: 1.18,
         // 中心点==经纬度
-        center: [-142.0, 12.0],
+        center: [122.7, 41.3],
         // 默认状态下省份样式
         itemStyle: {
           borderColor: "rgba(147,235,248,1)",
@@ -168,11 +159,16 @@ const renderChart = () => {
 
   // 柱形图
   props.data.voltageLevel.forEach((item, index) => {
-    const sortedCategoryData = [...props.data.categoryData[item]].sort((a, b) => {
-      return b.value - a.value;
-    });
+    const sortedCategoryData = [...props.data.categoryData[item]].sort(
+      (a, b) => {
+        return b.value - a.value;
+      },
+    );
     const cityValueMap = Object.fromEntries(
-      props.data.categoryData[item].map((cityItem) => [cityItem.name, cityItem.value])
+      props.data.categoryData[item].map((cityItem) => [
+        cityItem.name,
+        cityItem.value,
+      ]),
     );
     const valueList = Object.values(cityValueMap);
     const minValue = Math.min(...valueList);
@@ -202,8 +198,18 @@ const renderChart = () => {
         trigger: "item",
         formatter: (params) => {
           if (params.seriesType === "map") {
-            const value = params.value ?? 0;
-            return `${params.name}<br/>人口数据: ${value}`;
+            const regionName = params.name || "";
+            const normalizedName = regionName.replace(/市$/, "");
+            const matchedValue =
+              cityValueMap[regionName] ??
+              cityValueMap[`${normalizedName}市`] ??
+              cityValueMap[normalizedName];
+
+            if (Number.isFinite(matchedValue)) {
+              return `${regionName}<br/>人口数据: ${matchedValue}`;
+            }
+
+            return `${regionName}<br/>人口数据: 没有数据`;
           }
           return "";
         },
@@ -211,7 +217,7 @@ const renderChart = () => {
       title: [
         // 大title
         {
-          text: "2019-2023 哈基米省年度人口数据",
+          text: "2020-2024 辽宁省年度人口数据",
           left: 0,
           top: 0,
           textStyle: {
@@ -222,7 +228,7 @@ const renderChart = () => {
         // 小标题
         {
           id: "statistic",
-          text: item + "年哈基米省人口数据情况",
+          text: item + "年辽宁省人口数据情况",
           right: "0%",
           top: "4%",
           textStyle: {
@@ -273,7 +279,7 @@ const renderChart = () => {
       series: [
         {
           type: "map",
-          map: "cat",
+          map: MAP_NAME,
           geoIndex: 0,
           selectedMode: false,
           roam: false,
@@ -351,7 +357,8 @@ const renderChart = () => {
           },
           // 每一项的样式
           itemStyle: {
-            color: (params) => cityColorMap[params.name] || props.data.colors[index],
+            color: (params) =>
+              cityColorMap[params.name] || props.data.colors[index],
             shadowBlur: 5,
             shadowColor: (params) =>
               cityColorMap[params.name] || props.data.colors[index],

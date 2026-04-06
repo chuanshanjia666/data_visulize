@@ -3,56 +3,58 @@ export const getVisualization = (year = 2024) => {
 };
 
 export const getMockLiaoningData = (year = 2024) => {
-  // 哈基米省8个城市
+  // 辽宁省8个城市
   const cities = [
-    "哈基米",
-    "大狗嚼",
-    "叮咚鸡",
-    "南北绿豆",
-    "阿西伽",
-    "耐龙",
-    "香企鹅",
-    "曼波",
+    "沈阳市",
+    "大连市",
+    "鞍山市",
+    "抚顺市",
+    "本溪市",
+    "丹东市",
+    "锦州市",
+    "营口市",
   ];
 
-  const baseValue = 2020 + (year - 2020) * 50; // 哈基米指数基准值
-
-  // 生成各区数据
-  const hakimiIndexData = {
-    regions: cities.map((city) => ({
+  // 辽宁省城市发展指数数据
+  const liaoningCityDevelopmentData = {
+    cityDevelopmentIndexes: cities.map((city) => ({
       name: city,
-      value: Math.floor(Math.random() * 300 + 100),
+      value: Math.floor(Math.random() * 260 + 180),
     })),
   };
 
-  // 哈气风险数据
-  const haqiRiskData = {
-    haqiRisks: cities.map((city) => ({
+  // 辽宁省物流风险指数数据
+  const liaoningLogisticsRiskData = {
+    logisticsRisks: cities.map((city) => ({
       name: city,
-      value: Math.floor(Math.random() * 40 + 40),
+      value: Math.floor(Math.random() * 35 + 45),
     })),
   };
 
-  // 关系数据：随机生成拓扑，但固定哈吉米为中心
+  // 关系数据：随机生成拓扑，但固定沈阳为中心
   const centerPoint = [50, 200];
-  const peripheralCities = cities.filter((city) => city !== "哈基米");
+  const centerCity = cities[0];
+  const peripheralCities = cities.filter((city) => city !== centerCity);
 
   const relationNodes = [
     {
       id: 0,
-      name: "哈基米",
+      name: centerCity,
       value: centerPoint,
       source: null,
       target: null,
     },
     ...peripheralCities.map((city, index) => {
-      const angle = (Math.PI * 2 * index) / peripheralCities.length + (Math.random() - 0.5) * 0.35;
+      const angle =
+        (Math.PI * 2 * index) / peripheralCities.length +
+        (Math.random() - 0.5) * 0.35;
       const radius = 150 + Math.random() * 55;
       const x = Number((centerPoint[0] + Math.cos(angle) * radius).toFixed(2));
       const y = Number((centerPoint[1] + Math.sin(angle) * radius).toFixed(2));
       const id = index + 1;
       // 让节点以中心为主，也保留少量级联链路，形成动态拓扑结构
-      const source = Math.random() < 0.68 || id <= 2 ? 0 : Math.floor(Math.random() * id);
+      const source =
+        Math.random() < 0.68 || id <= 2 ? 0 : Math.floor(Math.random() * id);
 
       return {
         id,
@@ -64,21 +66,22 @@ export const getMockLiaoningData = (year = 2024) => {
     }),
   ];
 
-  const relationData = {
-    relations: relationNodes,
+  // 辽宁省物流拓扑数据
+  const liaoningLogisticsTopologyData = {
+    topologyNodes: relationNodes,
   };
 
   // 总览数据
   const totalData = {
-    total: 8000000 + year * 100000, // 哈基米总人口
-    hm: Math.floor(2000000 + Math.random() * 500000), // 哈基米指数
-    dg: Math.floor(1500000 + Math.random() * 400000), // 大狗嚼经济
-    dd: Math.floor(1800000 + Math.random() * 300000), // 叮咚鸡科技
-    nl: Math.floor(1200000 + Math.random() * 200000), // 南北绿豆农业
-    ax: Math.floor(1000000 + Math.random() * 250000), // 阿西伽文化
-    xl: Math.floor(800000 + Math.random() * 150000),  // 耐龙旅游
-    xq: Math.floor(700000 + Math.random() * 100000),  // 香企鹅生态
-    mb: Math.floor(600000 + Math.random() * 120000),  // 曼波渔业
+    total: 43000000 + (year - 2020) * 260000, // 辽宁总人口(模拟)
+    hm: Math.floor(5800000 + Math.random() * 400000), // 沈阳市
+    dg: Math.floor(4700000 + Math.random() * 350000), // 大连市
+    dd: Math.floor(3300000 + Math.random() * 260000), // 鞍山市
+    nl: Math.floor(2100000 + Math.random() * 180000), // 抚顺市
+    ax: Math.floor(1600000 + Math.random() * 140000), // 本溪市
+    xl: Math.floor(2200000 + Math.random() * 160000), // 丹东市
+    xq: Math.floor(2500000 + Math.random() * 170000), // 锦州市
+    mb: Math.floor(2300000 + Math.random() * 170000), // 营口市
   };
 
   // 地图人口数据
@@ -109,67 +112,67 @@ export const getMockLiaoningData = (year = 2024) => {
     });
   });
 
-  // 哈吉米GDP数据
+  // 城市GDP数据
   const gdpYears = [2020, 2021, 2022, 2023, 2024];
   const hakimiGdpData = {
     years: gdpYears,
     citySeries: cities.map((city, index) => {
-      const base = 420 + index * 75 + Math.floor(Math.random() * 45);
+      const base = 900 + index * 110 + Math.floor(Math.random() * 60);
       return {
         name: city,
         data: gdpYears.map((_, yearIndex) => {
-          const growth = 1 + yearIndex * (0.08 + index * 0.01);
-          const noise = Math.floor(Math.random() * 35);
+          const growth = 1 + yearIndex * (0.06 + index * 0.005);
+          const noise = Math.floor(Math.random() * 55);
           return Math.floor(base * growth + noise);
         }),
       };
     }),
   };
 
-  // 哈吉米幸福指数数据
-  const hakimiHappinessData = {
-    happinessIndexes: [
-      { name: "哈基米", value: Math.floor(Math.random() * 200 + 200) },
-      { name: "大狗嚼", value: Math.floor(Math.random() * 150 + 150) },
-      { name: "叮咚鸡", value: Math.floor(Math.random() * 120 + 100) },
-      { name: "南北绿豆", value: Math.floor(Math.random() * 100 + 80) },
-      { name: "阿西伽", value: Math.floor(Math.random() * 80 + 60) },
-      { name: "耐龙", value: Math.floor(Math.random() * 60 + 40) },
+  // 辽宁省城市幸福指数数据
+  const liaoningCityHappinessData = {
+    cityHappinessIndexes: [
+      { name: "沈阳市", value: Math.floor(Math.random() * 210 + 230) },
+      { name: "大连市", value: Math.floor(Math.random() * 170 + 190) },
+      { name: "鞍山市", value: Math.floor(Math.random() * 140 + 140) },
+      { name: "抚顺市", value: Math.floor(Math.random() * 120 + 110) },
+      { name: "本溪市", value: Math.floor(Math.random() * 100 + 90) },
+      { name: "丹东市", value: Math.floor(Math.random() * 95 + 85) },
     ],
   };
 
   // 词云数据
   const wordTerms = [
-    "哈基米",
-    "大狗嚼",
-    "叮咚鸡",
-    "南北绿豆",
-    "阿西伽",
-    "耐龙",
-    "香企鹅",
-    "曼波",
-    "数据中台",
-    "智慧调度",
-    "全域感知",
-    "拓扑链路",
-    "云端协同",
-    "异常监测",
-    "实时告警",
-    "趋势研判",
-    "城市画像",
-    "风险评级",
-    "资源编排",
-    "链路压测",
-    "态势推演",
-    "流量脉冲",
-    "关键节点",
-    "多源汇聚",
-    "算力分发",
-    "边缘联动",
-    "数据治理",
-    "策略引擎",
-    "统一指标",
-    "服务编组",
+    "沈阳市",
+    "大连市",
+    "鞍山市",
+    "抚顺市",
+    "本溪市",
+    "丹东市",
+    "锦州市",
+    "营口市",
+    "沈大经济走廊",
+    "沿海经济带",
+    "老工业基地",
+    "先进制造",
+    "港口联动",
+    "海铁联运",
+    "产业升级",
+    "数字政务",
+    "城市更新",
+    "文旅融合",
+    "生态修复",
+    "智能调度",
+    "风险监测",
+    "应急联动",
+    "科技创新",
+    "民生保障",
+    "营商环境",
+    "区域协同",
+    "交通枢纽",
+    "新能源",
+    "跨境合作",
+    "乡村振兴",
   ];
   const wordCloudData = {
     datas: wordTerms
@@ -181,32 +184,25 @@ export const getMockLiaoningData = (year = 2024) => {
   };
 
   return {
-    hakimiIndexData,
-    haqiRiskData,
-    relationData,
+    liaoningCityDevelopmentData,
+    liaoningLogisticsRiskData,
+    liaoningLogisticsTopologyData,
     totalData,
     populationData,
     hakimiGdpData,
-    hakimiHappinessData,
+    liaoningCityHappinessData,
     wordCloudData,
     currentYear: year,
   };
 };
 
-
 const cityCoordinates = {
-  // 8分区映射：每个城市占一个地图分区
-  // 身体中心
-  哈基米: [-177.5825492, -13.2787832],
-  // 头部中心
-  南北绿豆: [-190.3248152, 44.5658476],
-  // 左耳、右耳
-  大狗嚼: [-219.0533317, 59.1696211],
-  叮咚鸡: [-177.0285985, 66.0941452],
-  // 左前爪、右前爪
-  阿西伽: [-244.6272126, -21.9537321],
-  耐龙: [-116.6382292, -4.4037478],
-  // 左后部、右后部
-  香企鹅: [-179.7062602, -62.1641474],
-  曼波: [-144.0833451, -54.2160342],
+  沈阳市: [123.431474, 41.805698],
+  大连市: [121.614682, 38.914003],
+  鞍山市: [122.994329, 41.108647],
+  抚顺市: [123.957208, 41.880872],
+  本溪市: [123.766485, 41.294355],
+  丹东市: [124.354706, 40.200499],
+  锦州市: [121.127003, 41.095119],
+  营口市: [122.235417, 40.667012],
 };

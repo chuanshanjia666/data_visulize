@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="panel-title">哈气拓扑图</div>
+    <div class="panel-title">辽宁省物流拓扑图</div>
     <div ref="target" class="w-full h-full"></div>
   </div>
 </template>
@@ -24,7 +24,6 @@ onMounted(() => {
 });
 
 const renderChart = () => {
-  const topoMarks = ["哈", "基", "米", "南", "北", "绿", "豆", "哈"];
   const nodeColors = [
     "#4CC9F0",
     "#F72585",
@@ -35,10 +34,10 @@ const renderChart = () => {
     "#E9C46A",
     "#90BE6D",
   ];
-  const relationList = props.data.relations || [];
+  const relationList = props.data.topologyNodes || [];
   const centerNode =
     relationList.find((item) => item.id === 0) ||
-    relationList.find((item) => item.name === "哈基米");
+    relationList.find((item) => item.name === "沈阳市");
   const centerValue = centerNode?.value || [50, 200];
   const [centerX, centerY] = centerValue;
   const viewRadius = 235;
@@ -51,7 +50,6 @@ const renderChart = () => {
     .map((item, index) => ({
       source: item.source,
       target: item.target,
-      mark: topoMarks[index % topoMarks.length],
       // 线条样式
       lineStyle: {
         // 颜色
@@ -61,7 +59,7 @@ const renderChart = () => {
       },
       // 设置线条文字样式
       label: {
-        show: true,
+        show: false,
         position: "middle",
         offset: [10, 0],
       },
@@ -107,17 +105,7 @@ const renderChart = () => {
         z: 3,
         // 设置边界线条文字
         edgeLabel: {
-          show: true,
-          color: "#f2fbff",
-          fontSize: 13,
-          fontWeight: 700,
-          textBorderColor: "rgba(12, 37, 64, 0.85)",
-          textBorderWidth: 2,
-          textShadowColor: "rgba(0, 0, 0, 0.35)",
-          textShadowBlur: 4,
-          formatter: function (params) {
-            return params.data.mark || "";
-          },
+          show: false,
         },
         // 处理圆点下面的文字
         label: {
@@ -213,4 +201,3 @@ const renderChart = () => {
 // 监听数据改变重新渲染
 watch(() => props.data, renderChart);
 </script>
-
