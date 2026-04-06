@@ -51,17 +51,31 @@
 </template>
 
 <script setup>
-import HorizontalBar from "./components/HorizontalBar.vue";
-import RadarBar from "./components/RadarBar.vue";
-import Relation from "./components/Relation.vue";
-import TotalData from "./components/TotalData.vue";
-import MapChart from "./components/MapChart.vue";
-import VerticalBar from "./components/VerticalBar.vue";
-import RingBar from "./components/RingBar.vue";
-import WordCloud from "./components/WordCloud.vue";
-
 import { getVisualization } from "./api/visualization.js";
-import { ref } from "vue";
+import { defineAsyncComponent, ref } from "vue";
+
+const HorizontalBar = defineAsyncComponent(
+  () => import("./components/HorizontalBar.vue"),
+);
+const RadarBar = defineAsyncComponent(
+  () => import("./components/RadarBar.vue"),
+);
+const Relation = defineAsyncComponent(
+  () => import("./components/Relation.vue"),
+);
+const TotalData = defineAsyncComponent(
+  () => import("./components/TotalData.vue"),
+);
+const MapChart = defineAsyncComponent(
+  () => import("./components/MapChart.vue"),
+);
+const VerticalBar = defineAsyncComponent(
+  () => import("./components/VerticalBar.vue"),
+);
+const RingBar = defineAsyncComponent(() => import("./components/RingBar.vue"));
+const WordCloud = defineAsyncComponent(
+  () => import("./components/WordCloud.vue"),
+);
 
 const data = ref(null);
 

@@ -7,7 +7,9 @@
 
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import * as echarts from "echarts";
+import echarts from "../lib/echarts";
+import "echarts/lib/chart/graph";
+import "echarts/lib/chart/lines";
 
 const props = defineProps({
   data: {

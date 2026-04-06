@@ -7,7 +7,12 @@
 
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import * as echarts from "echarts";
+import echarts from "../lib/echarts";
+import "echarts/lib/chart/line";
+import "echarts/lib/component/axisPointer";
+import "echarts/lib/component/grid";
+import "echarts/lib/component/legend";
+import "echarts/lib/component/tooltip";
 
 const props = defineProps({
   data: {

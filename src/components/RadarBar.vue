@@ -7,7 +7,10 @@
 
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import * as echarts from "echarts";
+import echarts from "../lib/echarts";
+import "echarts/lib/chart/radar";
+import "echarts/lib/component/radar";
+import "echarts/lib/component/tooltip";
 
 const props = defineProps({
   data: {

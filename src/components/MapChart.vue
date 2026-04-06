@@ -6,7 +6,15 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import * as echarts from "echarts";
+import echarts from "../lib/echarts";
+import "echarts/lib/chart/bar";
+import "echarts/lib/chart/effectScatter";
+import "echarts/lib/chart/map";
+import "echarts/lib/component/geo";
+import "echarts/lib/component/grid";
+import "echarts/lib/component/timeline";
+import "echarts/lib/component/title";
+import "echarts/lib/component/tooltip";
 
 const LIAONING_GEOJSON_URL = "https://geojson.cn/api/china/1.6.3/210000.json";
 const MAP_NAME = "liaoning";
