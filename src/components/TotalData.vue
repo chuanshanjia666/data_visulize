@@ -4,7 +4,8 @@
       城市风采
     </div>
     <div class="text-slate-300 text-center text-sm tracking-[0.22em]">
-      辽宁省山海相映、人文荟萃，展示九处代表性风景
+      辽宁省位于中国东北沿海，是连接东北与环渤海的重要枢纽。
+      本项目从城市发展、产业经济与人口结构等维度，呈现辽宁的综合态势。
     </div>
     <div
       class="mt-2 h-20 rounded-xl overflow-hidden border border-cyan-200/15 bg-slate-950/20 shrink-0"

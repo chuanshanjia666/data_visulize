@@ -4,8 +4,8 @@
 
 /* 电子字体库 */
 @font-face {
-  font-family: 'Electronic';
-  src: url('./assets/fonts/FX-LED.ttf');
+  font-family: "Electronic";
+  src: url("./assets/fonts/FX-LED.ttf");
 }
 
 /* 文字渐变===>背景渐变+字体镂空 */
@@ -28,4 +28,40 @@
   background-clip: text;
   color: transparent;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-bg {
+  background-color: #050b17;
+  background-image:
+    radial-gradient(
+      circle at 16% 20%,
+      rgba(41, 155, 255, 0.26) 0%,
+      rgba(41, 155, 255, 0) 38%
+    ),
+    radial-gradient(
+      circle at 86% 14%,
+      rgba(24, 197, 151, 0.2) 0%,
+      rgba(24, 197, 151, 0) 40%
+    ),
+    radial-gradient(
+      circle at 82% 82%,
+      rgba(255, 178, 102, 0.18) 0%,
+      rgba(255, 178, 102, 0) 34%
+    ),
+    linear-gradient(140deg, #061127 0%, #081831 42%, #0a1d38 68%, #0f2742 100%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(126, 194, 255, 0.09) 0px,
+      rgba(126, 194, 255, 0.09) 1px,
+      transparent 1px,
+      transparent 42px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(126, 194, 255, 0.08) 0px,
+      rgba(126, 194, 255, 0.08) 1px,
+      transparent 1px,
+      transparent 42px
+    );
+  background-blend-mode: screen, screen, screen, normal, normal, normal;
 }

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-[url('assets/imgs/bg.jpg')] bg-cover bg-center h-screen text-white p-5 flex overflow-hidden"
+    class="dashboard-bg h-screen text-white p-5 flex overflow-hidden"
     v-if="data"
   >
     <!-- 左 -->
