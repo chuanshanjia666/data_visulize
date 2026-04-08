@@ -22,6 +22,8 @@ const target = ref(null);
 let myChart = null;
 const pageSize = 8;
 
+// 修改说明：最终版词云只保留核心热门词条，突出主题热度
+
 onMounted(() => {
   myChart = echarts.init(target.value);
   renderChart();

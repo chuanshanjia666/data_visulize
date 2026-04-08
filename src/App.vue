@@ -1,4 +1,5 @@
 <template>
+  <!-- 修改说明：最终版采用三栏仪表盘布局，统一接入同一份动态数据 -->
   <div
     class="dashboard-bg h-screen text-white p-5 flex overflow-hidden"
     v-if="data"
@@ -54,6 +55,7 @@
 import { getVisualization } from "./api/visualization.js";
 import { defineAsyncComponent, ref } from "vue";
 
+// 修改说明：图表组件改为按需异步加载，数据按固定周期刷新
 const HorizontalBar = defineAsyncComponent(
   () => import("./components/HorizontalBar.vue"),
 );

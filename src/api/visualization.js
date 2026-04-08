@@ -3,6 +3,7 @@ export const getVisualization = (year = 2024) => {
 };
 
 export const getMockLiaoningData = (year = 2024) => {
+  // 修改说明：最终版使用统一的模拟数据源，一次性提供 8 个图表所需字段
   // 辽宁省8个城市
   const cities = [
     "沈阳市",

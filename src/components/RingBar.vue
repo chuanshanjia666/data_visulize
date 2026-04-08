@@ -21,6 +21,8 @@ const props = defineProps({
 
 const target = ref(null);
 let myChart = null;
+
+// 修改说明：最终版改成玫瑰图样式的城市幸福指数对比
 onMounted(() => {
   myChart = echarts.init(target.value);
   renderChart();

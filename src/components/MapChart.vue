@@ -28,6 +28,8 @@ const props = defineProps({
 
 const target = ref(null);
 let myChart = null;
+
+// 修改说明：最终版改为在线拉取辽宁 GeoJSON，并用时间轴联动地图、柱图和热点
 onMounted(async () => {
   try {
     const response = await fetch(LIAONING_GEOJSON_URL);

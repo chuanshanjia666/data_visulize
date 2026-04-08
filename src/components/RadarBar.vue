@@ -21,6 +21,8 @@ const props = defineProps({
 
 const target = ref(null);
 let myChart = null;
+
+// 修改说明：最终版将雷达图固定为物流风险专题，强调单组指标轮廓
 onMounted(() => {
   myChart = echarts.init(target.value);
   renderChart();

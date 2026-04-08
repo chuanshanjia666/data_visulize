@@ -23,6 +23,8 @@ const props = defineProps({
 
 const target = ref(null);
 let myChart = null;
+
+// 修改说明：最终版把 GDP 模块调整成多城市年度趋势折线图
 onMounted(() => {
   myChart = echarts.init(target.value);
   renderChart();

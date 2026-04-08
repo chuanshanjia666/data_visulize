@@ -20,6 +20,7 @@ const props = defineProps({
   },
 });
 
+// 修改说明：最终版把城市发展指数做成渐变横向排名图
 // 1.初始化 echarts 实例
 let myChart = null;
 const target = ref(null);

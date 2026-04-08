@@ -20,6 +20,8 @@ const props = defineProps({
 
 const target = ref(null);
 let myChart = null;
+
+// 修改说明：最终版用 graph + lines 组合出中心辐射式拓扑结构
 onMounted(() => {
   myChart = echarts.init(target.value);
   renderChart();

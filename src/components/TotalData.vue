@@ -32,6 +32,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from "vue";
 
+// 修改说明：最终版把总览区改成城市风采介绍和轮播图片区
 const liaoningSceneryImages = [
   "https://commons.wikimedia.org/wiki/Special:FilePath/Mukden_palace_gate06.jpg",
   "https://commons.wikimedia.org/wiki/Special:FilePath/Mukden_palace_Chongzheng_Hall_01.jpg",
